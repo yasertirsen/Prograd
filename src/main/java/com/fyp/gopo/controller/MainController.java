@@ -1,4 +1,4 @@
-package com.fyp.gopo.com.fyp.gopo.controller;
+package com.fyp.gopo.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
