@@ -18,6 +18,12 @@ public class Module {
     @ManyToMany
     private Set<Skill> skills;
 
+    public Module(String moduleName, String moduleDescription, Set<Skill> skills) {
+        this.moduleName = moduleName;
+        this.moduleDescription = moduleDescription;
+        this.skills = skills;
+    }
+
     public Module() {
 
     }

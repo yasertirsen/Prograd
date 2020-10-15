@@ -15,6 +15,11 @@ public class Skill {
     @ManyToOne
     private Industry industry;
 
+    public Skill(String skillName, Industry industry) {
+        this.skillName = skillName;
+        this.industry = industry;
+    }
+
     public Skill() {
 
     }

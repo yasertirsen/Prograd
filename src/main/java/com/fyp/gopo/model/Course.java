@@ -20,6 +20,14 @@ public class Course {
     @OneToMany
     private Set<Module> modules;
 
+    public Course(String courseName, String university, String level, String duration, Set<Module> modules) {
+        this.courseName = courseName;
+        this.university = university;
+        this.level = level;
+        this.duration = duration;
+        this.modules = modules;
+    }
+
     public Course() {
 
     }

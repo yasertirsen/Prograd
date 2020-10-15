@@ -28,6 +28,19 @@ public class Student {
     @OneToMany
     private Set<Skill> externalSkills;
 
+    public Student(String firstName, String surname, String studentEmail, String username, String studentPassword, String phone, Resume resume, Course course,
+    Set<Skill> externalSkills) {
+        this.firstName = firstName;
+        this.surname = surname;
+        this.studentEmail = studentEmail;
+        this.username = username;
+        this.studentPassword = studentPassword;
+        this.phone = phone;
+        this.resume = resume;
+        this.course = course;
+        this.externalSkills = externalSkills;
+    }
+
     public Student() {
 
     }
@@ -110,13 +123,5 @@ public class Student {
 
     public void setExternalSkills(Set<Skill> externalSkills) {
         this.externalSkills = externalSkills;
-    }
-
-    public Set<Skill> getSkills() {
-        return externalSkills;
-    }
-
-    public void setSkills(Set<Skill> skills) {
-        this.externalSkills = skills;
     }
 }
