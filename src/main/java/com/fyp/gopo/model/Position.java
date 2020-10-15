@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
@@ -13,12 +14,14 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long positionId;
     private String positionName;
-    private String email;
-    private String password;
     private String positionDescription;
     //optional
     private double positionSalary;
-    private String location;
+    //optional
+    private String positionUrl;
+    private int clicks;
+    @ManyToOne
+    private Company company;
     @OneToMany
     private Set<Skill> requirements;
 
@@ -42,22 +45,6 @@ public class Position {
         this.positionName = positionName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public String getPositionDescription() {
         return positionDescription;
     }
@@ -74,12 +61,28 @@ public class Position {
         this.positionSalary = positionSalary;
     }
 
-    public String getLocation() {
-        return location;
+    public String getPositionUrl() {
+        return positionUrl;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setPositionUrl(String positionUrl) {
+        this.positionUrl = positionUrl;
+    }
+
+    public int getClicks() {
+        return clicks;
+    }
+
+    public void setClicks(int clicks) {
+        this.clicks = clicks;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public Set<Skill> getRequirements() {

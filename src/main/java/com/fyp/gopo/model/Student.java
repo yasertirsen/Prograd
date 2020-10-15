@@ -17,8 +17,8 @@ public class Student {
     private long studentId;
     private String firstName;
     private String surname;
-    private String email;
-    private String password;
+    private String studentEmail;
+    private String studentPassword;
     private String username;
     private String phone;
     @OneToOne
@@ -56,20 +56,20 @@ public class Student {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getStudentEmail() {
+        return studentEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getStudentPassword() {
+        return studentPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
     }
 
     public String getUsername() {

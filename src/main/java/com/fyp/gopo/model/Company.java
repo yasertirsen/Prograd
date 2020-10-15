@@ -12,10 +12,17 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long companyId;
+    private String companyEmail;
+    private String companyPassword;
     private String companyName;
     private String companyUrl;
+    private String address;
     @OneToMany
     private Set<Position> positions;
+    @OneToMany
+    private Set<Payment> payments;
+    @OneToMany
+    private  Set<Review> reviews;
 
     public Company() {
 
@@ -27,6 +34,22 @@ public class Company {
 
     public void setCompanyId(long companyId) {
         this.companyId = companyId;
+    }
+
+    public String getCompanyEmail() {
+        return companyEmail;
+    }
+
+    public void setCompanyEmail(String companyEmail) {
+        this.companyEmail = companyEmail;
+    }
+
+    public String getCompanyPassword() {
+        return companyPassword;
+    }
+
+    public void setCompanyPassword(String companyPassword) {
+        this.companyPassword = companyPassword;
     }
 
     public String getCompanyName() {
@@ -41,6 +64,14 @@ public class Company {
         return companyUrl;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public void setCompanyUrl(String companyUrl) {
         this.companyUrl = companyUrl;
     }
@@ -51,5 +82,21 @@ public class Company {
 
     public void setPositions(Set<Position> positions) {
         this.positions = positions;
+    }
+
+    public Set<Payment> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(Set<Payment> payments) {
+        this.payments = payments;
+    }
+
+    public Set<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 }
