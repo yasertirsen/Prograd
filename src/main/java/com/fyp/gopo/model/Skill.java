@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long skillId;
     private String skillName;
     @ManyToOne
     private Industry industry;
@@ -19,12 +19,12 @@ public class Skill {
 
     }
 
-    public long getId() {
-        return id;
+    public long getSkillId() {
+        return skillId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setSkillId(long skillId) {
+        this.skillId = skillId;
     }
 
     public String getSkillName() {

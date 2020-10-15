@@ -6,34 +6,38 @@ import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
 import javax.persistence.ManyToMany;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Set;
 
 @Entity
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long studentId;
     private String firstName;
     private String surname;
-    private String email;
-    private String password;
+    private String studentEmail;
+    private String studentPassword;
     private String username;
     private String phone;
+    @OneToOne
+    private Resume resume;
     @ManyToOne
     private Course course;
-    @ManyToMany
+    @OneToMany
     private Set<Skill> externalSkills;
 
     public Student() {
 
     }
 
-    public long getId() {
-        return id;
+    public long getStudentId() {
+        return studentId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
     }
 
     public String getFirstName() {
@@ -52,20 +56,20 @@ public class Student {
         this.surname = surname;
     }
 
-    public String getEmail() {
-        return email;
+    public String getStudentEmail() {
+        return studentEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setStudentEmail(String studentEmail) {
+        this.studentEmail = studentEmail;
     }
 
-    public String getPassword() {
-        return password;
+    public String getStudentPassword() {
+        return studentPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
     }
 
     public String getUsername() {
@@ -90,6 +94,22 @@ public class Student {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Resume getResume() {
+        return resume;
+    }
+
+    public void setResume(Resume resume) {
+        this.resume = resume;
+    }
+
+    public Set<Skill> getExternalSkills() {
+        return externalSkills;
+    }
+
+    public void setExternalSkills(Set<Skill> externalSkills) {
+        this.externalSkills = externalSkills;
     }
 
     public Set<Skill> getSkills() {
