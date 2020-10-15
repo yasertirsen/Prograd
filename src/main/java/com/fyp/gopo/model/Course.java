@@ -12,7 +12,7 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long courseId;
     private String courseName;
     private String university;
     private String level;
@@ -24,12 +24,12 @@ public class Course {
 
     }
 
-    public long getId() {
-        return id;
+    public long getCourseId() {
+        return courseId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
     }
 
     public String getCourseName() {

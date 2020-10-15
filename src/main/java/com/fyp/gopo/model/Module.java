@@ -12,7 +12,7 @@ public class Module {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long moduleId;
     private String moduleName;
     private String moduleDescription;
     @ManyToMany
@@ -22,12 +22,12 @@ public class Module {
 
     }
 
-    public long getId() {
-        return id;
+    public long getModuleId() {
+        return moduleId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setModuleId(long moduleId) {
+        this.moduleId = moduleId;
     }
 
     public String getModuleName() {

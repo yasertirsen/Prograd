@@ -11,19 +11,19 @@ import java.util.Set;
 public class Industry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private long industryId;
     private String industryName;
 
     public Industry() {
 
     }
 
-    public long getId() {
-        return id;
+    public long getIndustryId() {
+        return industryId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setIndustryId(long industryId) {
+        this.industryId = industryId;
     }
 
     public String getIndustryName() {
