@@ -19,6 +19,8 @@ public class Course {
     private String duration;
     @OneToMany
     private Set<Module> modules;
+    @OneToMany
+    private Set<Industry> courseIndustries;
 
     public Course(String courseName, String university, String level, String duration, Set<Module> modules) {
         this.courseName = courseName;

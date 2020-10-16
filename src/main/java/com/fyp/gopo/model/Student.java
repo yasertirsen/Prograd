@@ -21,6 +21,7 @@ public class Student {
     private String studentPassword;
     private String username;
     private String phone;
+    private String socialUrl;
     @OneToOne
     private Resume resume;
     @ManyToOne
@@ -28,7 +29,7 @@ public class Student {
     @OneToMany
     private Set<Skill> externalSkills;
 
-    public Student(String firstName, String surname, String studentEmail, String username, String studentPassword, String phone, Resume resume, Course course,
+    public Student(String firstName, String surname, String studentEmail, String username, String studentPassword, String phone, String socialUrl, Resume resume, Course course,
     Set<Skill> externalSkills) {
         this.firstName = firstName;
         this.surname = surname;
@@ -36,6 +37,7 @@ public class Student {
         this.username = username;
         this.studentPassword = studentPassword;
         this.phone = phone;
+        this.socialUrl = socialUrl;
         this.resume = resume;
         this.course = course;
         this.externalSkills = externalSkills;
@@ -99,6 +101,14 @@ public class Student {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getSocialUrl() {
+        return socialUrl;
+    }
+
+    public void setSocialUrl(String socialUrl) {
+        this.socialUrl = socialUrl;
     }
 
     public Course getCourse() {

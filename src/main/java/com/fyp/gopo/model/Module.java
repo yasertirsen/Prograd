@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import java.util.Set;
 
 @Entity
@@ -16,12 +18,14 @@ public class Module {
     private String moduleName;
     private String moduleDescription;
     @ManyToMany
-    private Set<Skill> skills;
+    private Set<Skill> moduleSkills;
+    @OneToOne
+    private Industry moduleIndustry;
 
-    public Module(String moduleName, String moduleDescription, Set<Skill> skills) {
+    public Module(String moduleName, String moduleDescription, Set<Skill> moduleSkills) {
         this.moduleName = moduleName;
         this.moduleDescription = moduleDescription;
-        this.skills = skills;
+        this.moduleSkills = moduleSkills;
     }
 
     public Module() {
@@ -52,11 +56,19 @@ public class Module {
         this.moduleDescription = moduleDescription;
     }
 
-    public Set<Skill> getSkills() {
-        return skills;
+    public Set<Skill> getModuleSkills() {
+        return moduleSkills;
     }
 
-    public void setSkills(Set<Skill> skills) {
-        this.skills = skills;
+    public void setModuleSkills(Set<Skill> moduleSkills) {
+        this.moduleSkills = moduleSkills;
+    }
+
+    public Industry getModuleIndustry() {
+        return moduleIndustry;
+    }
+
+    public void setModuleIndustry(Industry moduleIndustry) {
+        this.moduleIndustry = moduleIndustry;
     }
 }

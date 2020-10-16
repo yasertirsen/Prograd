@@ -13,11 +13,11 @@ public class Skill {
     private long skillId;
     private String skillName;
     @ManyToOne
-    private Industry industry;
+    private Industry skillIndustry;
 
-    public Skill(String skillName, Industry industry) {
+    public Skill(String skillName, Industry skillIndustry) {
         this.skillName = skillName;
-        this.industry = industry;
+        this.skillIndustry = skillIndustry;
     }
 
     public Skill() {
@@ -40,12 +40,12 @@ public class Skill {
         this.skillName = skillName;
     }
 
-    public Industry getIndustry() {
-        return industry;
+    public Industry getSkillIndustry() {
+        return skillIndustry;
     }
 
-    public void setIndustry(Industry industry) {
-        this.industry = industry;
+    public void setSkillIndustry(Industry skillIndustry) {
+        this.skillIndustry = skillIndustry;
     }
 }
 
