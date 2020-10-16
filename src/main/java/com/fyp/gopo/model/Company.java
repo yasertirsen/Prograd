@@ -23,6 +23,8 @@ public class Company {
     private Set<Payment> payments;
     @OneToMany
     private  Set<Review> reviews;
+    @OneToMany
+    private Set<Student> hiredStudents;
 
     public Company() {
 
@@ -98,5 +100,13 @@ public class Company {
 
     public void setReviews(Set<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    public Set<Student> getHiredStudents() {
+        return hiredStudents;
+    }
+
+    public void setHiredStudents(Set<Student> hiredStudents) {
+        this.hiredStudents = hiredStudents;
     }
 }

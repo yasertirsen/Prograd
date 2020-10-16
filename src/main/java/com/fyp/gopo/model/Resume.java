@@ -15,6 +15,10 @@ public class Resume {
     @OneToOne
     private Student student;
 
+    public Resume(String resumeContent) {
+        this.resumeContent = resumeContent;
+    }
+
     public Resume() {
 
     }

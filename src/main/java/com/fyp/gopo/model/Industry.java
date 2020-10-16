@@ -14,6 +14,9 @@ public class Industry {
     private long industryId;
     private String industryName;
 
+    public Industry(String industryName) {
+        this.industryName = industryName;
+    }
     public Industry() {
 
     }
