@@ -1,13 +1,16 @@
 package com.fyp.gopo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
+@Table(name = "course")
 public class Course {
 
     @Id
@@ -15,18 +18,16 @@ public class Course {
     private long courseId;
     private String courseName;
     private String university;
-    private String level;
-    private String duration;
-    @OneToMany
+    private int level;
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Module> modules;
     @OneToMany
     private Set<Industry> courseIndustries;
 
-    public Course(String courseName, String university, String level, String duration, Set<Module> modules) {
+    public Course(String courseName, String university, int level, Set<Module> modules) {
         this.courseName = courseName;
         this.university = university;
         this.level = level;
-        this.duration = duration;
         this.modules = modules;
     }
 
@@ -58,20 +59,12 @@ public class Course {
         this.university = university;
     }
 
-    public String getLevel() {
+    public int getLevel() {
         return level;
     }
 
-    public void setLevel(String level) {
+    public void setLevel(int level) {
         this.level = level;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
     }
 
     public Set<Module> getModules() {

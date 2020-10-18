@@ -5,9 +5,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.Set;
 
 @Entity
+@Table(name = "industry")
 public class Industry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

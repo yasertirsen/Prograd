@@ -1,5 +1,6 @@
 package com.fyp.gopo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,7 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long skillId;
     private String skillName;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Industry skillIndustry;
 
     public Skill(String skillName, Industry skillIndustry) {
