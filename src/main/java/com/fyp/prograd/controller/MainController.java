@@ -1,19 +1,18 @@
-package com.fyp.gopo.controller;
+package com.fyp.prograd.controller;
 
 import javax.validation.Valid;
 
-import com.fyp.gopo.model.Course;
-import com.fyp.gopo.model.Industry;
-import com.fyp.gopo.model.Module;
-import com.fyp.gopo.model.Resume;
-import com.fyp.gopo.model.Skill;
-import com.fyp.gopo.model.Student;
-import com.fyp.gopo.repository.CourseRepository;
-import com.fyp.gopo.repository.IndustryRepository;
-import com.fyp.gopo.repository.ModuleRepository;
-import com.fyp.gopo.repository.SkillRepository;
-import com.fyp.gopo.repository.StudentRepository;
-import com.sun.org.apache.xpath.internal.operations.Mod;
+import com.fyp.prograd.model.Course;
+import com.fyp.prograd.model.Industry;
+import com.fyp.prograd.model.Module;
+import com.fyp.prograd.model.Resume;
+import com.fyp.prograd.model.Skill;
+import com.fyp.prograd.model.Student;
+import com.fyp.prograd.repository.CourseRepository;
+import com.fyp.prograd.repository.IndustryRepository;
+import com.fyp.prograd.repository.ModuleRepository;
+import com.fyp.prograd.repository.SkillRepository;
+import com.fyp.prograd.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -142,6 +141,6 @@ public class MainController {
 
     @GetMapping("/")
     public String home() {
-        return "Welcome to Gopo!";
+        return "Welcome to Prograd!";
     }
 }

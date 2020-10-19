@@ -1,4 +1,4 @@
-package com.fyp.gopo.model;
+package com.fyp.prograd.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;

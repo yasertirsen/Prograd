@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.fyp</groupId>
-    <artifactId>gopo</artifactId>
+    <artifactId>prograd</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>gopo</name>
-    <description>Gopo API for students</description>
+    <name>prograd</name>
+    <description>Prograd API for students</description>
 
     <properties>
         <java.version>1.8</java.version>

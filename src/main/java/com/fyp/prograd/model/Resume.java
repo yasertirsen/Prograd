@@ -1,4 +1,4 @@
-package com.fyp.gopo.model;
+package com.fyp.prograd.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
