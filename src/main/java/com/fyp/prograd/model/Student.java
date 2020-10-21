@@ -20,8 +20,8 @@ public class Student {
     private long studentId;
     private String firstName;
     private String surname;
-    private String studentEmail;
-    private String studentPassword;
+    private String email;
+    private String password;
     private String username;
     private String phone;
     private String socialUrl;
@@ -32,13 +32,13 @@ public class Student {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Skill> externalSkills;
 
-    public Student(String firstName, String surname, String studentEmail, String username, String studentPassword, String phone, String socialUrl, Resume resume, Course course,
+    public Student(String firstName, String surname, String email, String username, String password, String phone, String socialUrl, Resume resume, Course course,
     Set<Skill> externalSkills) {
         this.firstName = firstName;
         this.surname = surname;
-        this.studentEmail = studentEmail;
+        this.email = email;
         this.username = username;
-        this.studentPassword = studentPassword;
+        this.password = password;
         this.phone = phone;
         this.socialUrl = socialUrl;
         this.resume = resume;
@@ -74,20 +74,20 @@ public class Student {
         this.surname = surname;
     }
 
-    public String getStudentEmail() {
-        return studentEmail;
+    public String getEmail() {
+        return email;
     }
 
-    public void setStudentEmail(String studentEmail) {
-        this.studentEmail = studentEmail;
+    public void setEmail(String studentEmail) {
+        this.email = studentEmail;
     }
 
-    public String getStudentPassword() {
-        return studentPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setStudentPassword(String studentPassword) {
-        this.studentPassword = studentPassword;
+    public void setPassword(String studentPassword) {
+        this.password = studentPassword;
     }
 
     public String getUsername() {
