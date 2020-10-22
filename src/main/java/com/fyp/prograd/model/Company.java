@@ -17,6 +17,8 @@ public class Company {
     private String companyName;
     private String companyUrl;
     private String address;
+    private String recruiter;
+    private String recruiterPhone;
     @OneToMany
     private Set<Position> positions;
     @OneToMany
@@ -26,9 +28,16 @@ public class Company {
     @OneToMany
     private Set<Student> hiredStudents;
 
+    public Company(String companyEmail, String companyPassword, String companyName) {
+        this.companyEmail = companyEmail;
+        this.companyPassword = companyPassword;
+        this.companyName = companyName;
+    }
+
     public Company() {
 
     }
+
 
     public long getCompanyId() {
         return companyId;
@@ -76,6 +85,22 @@ public class Company {
 
     public void setCompanyUrl(String companyUrl) {
         this.companyUrl = companyUrl;
+    }
+
+    public String getRecruiter() {
+        return recruiter;
+    }
+
+    public void setRecruiter(String recruiter) {
+        this.recruiter = recruiter;
+    }
+
+    public String getRecruiterPhone() {
+        return recruiterPhone;
+    }
+
+    public void setRecruiterPhone(String recruiterPhone) {
+        this.recruiterPhone = recruiterPhone;
     }
 
     public Set<Position> getPositions() {

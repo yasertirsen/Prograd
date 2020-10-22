@@ -12,6 +12,14 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -20,7 +28,8 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     HomeComponent,
     RegisterComponent,
     LoginComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +37,14 @@ import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
     FormsModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    LayoutModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

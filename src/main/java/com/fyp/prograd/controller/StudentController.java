@@ -33,7 +33,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/student")
 public class StudentController {
 
     private final StudentRepository studentRepository;
@@ -43,7 +43,8 @@ public class StudentController {
         this.studentRepository = studentRepository;
     }
 
-    @RequestMapping("/students")
+    @GetMapping(value = "/all", produces = "application/json")
+    @ResponseBody
     public ResponseEntity<?> getAllStudents() {
 
         List<Student> students= studentRepository.findAll();
@@ -52,7 +53,7 @@ public class StudentController {
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
 
-    @PostMapping(value = "/addstudent", consumes = "application/json")
+    @PostMapping(value = "/add", consumes = "application/json")
     @ResponseBody
     public ResponseEntity<?> addStudent(@Valid @RequestBody Student student, BindingResult result){
         if(result.hasErrors())
@@ -60,7 +61,7 @@ public class StudentController {
         return new ResponseEntity<>(studentRepository.save(student), HttpStatus.CREATED);
     }
 
-    @DeleteMapping(value = "/deletestudent/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         if(!studentRepository.existsById(id))
             return new ResponseEntity<>("Student with the id "+id+ " not found!", HttpStatus.BAD_REQUEST);
@@ -72,7 +73,7 @@ public class StudentController {
         }
     }
 
-    @PutMapping(value = "/updatestudent", consumes = "application/json", produces="application/json")
+    @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
     public ResponseEntity<?> updateStudent(Student student, BindingResult bindingResult){
         if(bindingResult.hasErrors())
