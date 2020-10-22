@@ -7,8 +7,10 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
+  hide = true;
   model: StudentModel = {
-    username:'',
+    firstName:'',
+    surname:'',
     email:'',
     password:''
   };
@@ -31,7 +33,8 @@ export class RegisterComponent implements OnInit {
 }
 
 export interface StudentModel {
-  username: string;
+  firstName: string;
+  surname: string;
   email: string;
   password: string;
 }
