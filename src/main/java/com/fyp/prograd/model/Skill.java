@@ -1,52 +1,36 @@
 package com.fyp.prograd.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
+@Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Skill {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long skillId;
+    @NotBlank(message = "Skill name cannot be empty or Null")
+    @Column(unique = true)
     private String skillName;
     @ManyToOne(cascade = CascadeType.ALL)
-    private Industry skillIndustry;
-
-    public Skill(String skillName, Industry skillIndustry) {
-        this.skillName = skillName;
-        this.skillIndustry = skillIndustry;
-    }
-
-    public Skill() {
-
-    }
-
-    public long getSkillId() {
-        return skillId;
-    }
-
-    public void setSkillId(long skillId) {
-        this.skillId = skillId;
-    }
-
-    public String getSkillName() {
-        return skillName;
-    }
-
-    public void setSkillName(String skillName) {
-        this.skillName = skillName;
-    }
-
-    public Industry getSkillIndustry() {
-        return skillIndustry;
-    }
-
-    public void setSkillIndustry(Industry skillIndustry) {
-        this.skillIndustry = skillIndustry;
-    }
+    @JoinColumn(name = "industryId", referencedColumnName = "industryId")
+    private Industry industry;
 }
 

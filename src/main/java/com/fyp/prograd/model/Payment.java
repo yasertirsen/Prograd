@@ -1,75 +1,39 @@
 package com.fyp.prograd.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.util.Date;
 
+@Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long paymentId;
+    @NotBlank(message = "Payment amount is required")
     private double paymentAmount;
-    private Date paymentDate;
+    private Instant paymentDate;
     private String paymentDescription;
     @OneToOne
+    //@JoinColumn(name = "positionId", referencedColumnName = "positionId")
     private Position position;
     @ManyToOne
     private Company company;
-
-    public Payment() {
-
-    }
-
-    public long getPaymentId() {
-        return paymentId;
-    }
-
-    public void setPaymentId(long paymentId) {
-        this.paymentId = paymentId;
-    }
-
-    public double getPaymentAmount() {
-        return paymentAmount;
-    }
-
-    public void setPaymentAmount(double paymentAmount) {
-        this.paymentAmount = paymentAmount;
-    }
-
-    public Date getPaymentDate() {
-        return paymentDate;
-    }
-
-    public void setPaymentDate(Date paymentDate) {
-        this.paymentDate = paymentDate;
-    }
-
-    public String getPaymentDescription() {
-        return paymentDescription;
-    }
-
-    public void setPaymentDescription(String paymentDescription) {
-        this.paymentDescription = paymentDescription;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
 }

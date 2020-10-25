@@ -9,8 +9,7 @@ import {HttpClient} from "@angular/common/http";
 export class RegisterComponent implements OnInit {
   hide = true;
   model: StudentModel = {
-    firstName:'',
-    surname:'',
+    username:'',
     email:'',
     password:''
   };
@@ -20,7 +19,7 @@ export class RegisterComponent implements OnInit {
   }
 
   registerStudent(): void {
-    let url = "http://localhost:8082/api/student/add";
+    let url = "http://localhost:8082/api/auth/signup";
     this.client.post(url, this.model).subscribe(
       res => {
         location.reload();
@@ -33,8 +32,7 @@ export class RegisterComponent implements OnInit {
 }
 
 export interface StudentModel {
-  firstName: string;
-  surname: string;
+  username:string,
   email: string;
   password: string;
 }

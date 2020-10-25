@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
 @Entity
@@ -12,27 +15,19 @@ public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long companyId;
+    @Email
+    @NotEmpty(message = "Email is required")
     private String companyEmail;
+    @NotBlank(message = "Password is required")
     private String companyPassword;
+    @NotBlank(message = "Company name is required")
     private String companyName;
     private String companyUrl;
     private String address;
     private String recruiter;
     private String recruiterPhone;
     @OneToMany
-    private Set<Position> positions;
-    @OneToMany
-    private Set<Payment> payments;
-    @OneToMany
-    private  Set<Review> reviews;
-    @OneToMany
     private Set<Student> hiredStudents;
-
-    public Company(String companyEmail, String companyPassword, String companyName) {
-        this.companyEmail = companyEmail;
-        this.companyPassword = companyPassword;
-        this.companyName = companyName;
-    }
 
     public Company() {
 
@@ -101,30 +96,6 @@ public class Company {
 
     public void setRecruiterPhone(String recruiterPhone) {
         this.recruiterPhone = recruiterPhone;
-    }
-
-    public Set<Position> getPositions() {
-        return positions;
-    }
-
-    public void setPositions(Set<Position> positions) {
-        this.positions = positions;
-    }
-
-    public Set<Payment> getPayments() {
-        return payments;
-    }
-
-    public void setPayments(Set<Payment> payments) {
-        this.payments = payments;
-    }
-
-    public Set<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(Set<Review> reviews) {
-        this.reviews = reviews;
     }
 
     public Set<Student> getHiredStudents() {

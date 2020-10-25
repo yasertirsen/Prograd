@@ -1,5 +1,6 @@
 package com.fyp.prograd.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Industry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long industryId;
+    @Column(unique = true)
     private String industryName;
 
     public Industry(String industryName) {
