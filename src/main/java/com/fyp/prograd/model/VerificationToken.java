@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.Instant;
@@ -24,6 +25,7 @@ public class VerificationToken {
     private Long tokenId;
     private String token;
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "studentId", referencedColumnName = "studentId")
     private Student student;
     private Instant expiryDate;
 }

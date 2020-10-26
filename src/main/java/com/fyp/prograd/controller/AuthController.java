@@ -1,5 +1,9 @@
 package com.fyp.prograd.controller;
 
+import com.fyp.prograd.dto.AuthenticationResponse;
+import com.fyp.prograd.security.JwtProvider;
+import com.google.gson.Gson;
+import com.fyp.prograd.dto.LoginRequest;
 import com.fyp.prograd.dto.RegisterRequest;
 import com.fyp.prograd.exceptions.ProgradException;
 import com.fyp.prograd.model.NotificationEmail;
@@ -11,7 +15,12 @@ import com.fyp.prograd.service.MailService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,36 +44,51 @@ public class AuthController {
     private final StudentRepository studentRepository;
     private final VerificationTokenRepository verificationTokenRepository;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtProvider jwtProvider;
 
-    @PostMapping("/signup")
+    @PostMapping(value = "/signup", consumes = "application/json")
     @Transactional
-    public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest) {
-        Student student = new Student();
-        student.setUsername(registerRequest.getUsername());
-        student.setEmail(registerRequest.getEmail());
-        student.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        student.setCreated(Instant.now());
-        student.setEnabled(false);
+    public ResponseEntity<?> signup(@RequestBody RegisterRequest registerRequest, BindingResult result) {
+        if(result.hasErrors())
+            return new ResponseEntity<>("Please check all student information is correct.", HttpStatus.BAD_REQUEST);
+        else {
+            Student student = new Student();
+            student.setUsername(registerRequest.getUsername());
+            student.setEmail(registerRequest.getEmail());
+            student.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+            student.setCreated(Instant.now());
+            student.setEnabled(false);
 
-        studentRepository.save(student);
+            studentRepository.save(student);
 
-        String token = generateVerificationToken(student);
-        mailService.sendMail(new NotificationEmail("Account Activation - Prograd",
-                student.getEmail(), "Thank you for signing up to Prograd, " +
-                "please click the link below to activate your account " +
-                "http://localhost:8082/api/auth/verification/" + token));
+            String token = generateVerificationToken(student);
+            mailService.sendMail(new NotificationEmail("Account Activation - Prograd",
+                    student.getEmail(), "Thank you for signing up to Prograd, " +
+                    "please click the link below to activate your account " +
+                    "http://localhost:8082/api/auth/verification/" + token));
 
-        return new ResponseEntity<>("User registration successful",
-                HttpStatus.OK);
+            return new ResponseEntity<>(new Gson().toJson("User registration successful"),
+                    HttpStatus.OK);
+        }
     }
 
     @GetMapping("/verification/{token}")
-    public ResponseEntity<String> verifyAccount(@PathVariable String token) {
+    public ResponseEntity<?> verifyAccount(@PathVariable String token) {
         Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
         verificationToken.orElseThrow(() -> new ProgradException("Invalid Token"));
         fetchUserAndEnable(verificationToken.get());
 
-        return new ResponseEntity<>("Account Activated Successfully", HttpStatus.OK);
+        return new ResponseEntity<>(new Gson().toJson("Account Activated Successfully"), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+                loginRequest.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+        String token = jwtProvider.generateToken(authenticate);
+        return new AuthenticationResponse(token, loginRequest.getUsername());
     }
 
     @Transactional

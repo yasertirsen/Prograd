@@ -32,7 +32,7 @@ public class Payment {
     private Instant paymentDate;
     private String paymentDescription;
     @OneToOne
-    //@JoinColumn(name = "positionId", referencedColumnName = "positionId")
+    @JoinColumn(name = "positionId", referencedColumnName = "positionId")
     private Position position;
     @ManyToOne
     private Company company;
