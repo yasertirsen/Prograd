@@ -1,5 +1,6 @@
 package com.fyp.prograd.controller;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import com.fyp.prograd.model.Course;
@@ -13,6 +14,7 @@ import com.fyp.prograd.repository.IndustryRepository;
 import com.fyp.prograd.repository.ModuleRepository;
 import com.fyp.prograd.repository.SkillRepository;
 import com.fyp.prograd.repository.StudentRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,17 +36,14 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/api/student")
+@AllArgsConstructor
 public class StudentController {
 
     private final StudentRepository studentRepository;
 
-    @Autowired
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
-    }
-
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
+    @Transactional
     public ResponseEntity<?> getAllStudents() {
 
         List<Student> students= studentRepository.findAll();
@@ -55,6 +54,7 @@ public class StudentController {
 
     @PostMapping(value = "/add", consumes = "application/json")
     @ResponseBody
+    @Transactional
     public ResponseEntity<?> addStudent(@Valid @RequestBody Student student, BindingResult result){
         if(result.hasErrors())
             return new ResponseEntity<>("Please check all student information is correct.",HttpStatus.BAD_REQUEST);
@@ -62,6 +62,7 @@ public class StudentController {
     }
 
     @DeleteMapping(value = "/delete/{id}")
+    @Transactional
     public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
         if(!studentRepository.existsById(id))
             return new ResponseEntity<>("Student with the id "+id+ " not found!", HttpStatus.BAD_REQUEST);
@@ -75,6 +76,7 @@ public class StudentController {
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
+    @Transactional
     public ResponseEntity<?> updateStudent(Student student, BindingResult bindingResult){
         if(bindingResult.hasErrors())
             return new ResponseEntity<>("Some error message",HttpStatus.BAD_REQUEST);
