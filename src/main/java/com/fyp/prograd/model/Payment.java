@@ -27,7 +27,7 @@ public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long paymentId;
-    @NotBlank(message = "Payment amount is required")
+    @NotBlank
     private double paymentAmount;
     private Instant paymentDate;
     private String paymentDescription;

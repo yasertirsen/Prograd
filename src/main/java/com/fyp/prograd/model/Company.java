@@ -25,11 +25,11 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long companyId;
     @Email
-    @NotEmpty(message = "Email is required")
+    @NotEmpty
     private String companyEmail;
-    @NotBlank(message = "Password is required")
+    @NotBlank
     private String companyPassword;
-    @NotBlank(message = "Company name is required")
+    @NotBlank
     private String companyName;
     private String companyUrl;
     private String address;

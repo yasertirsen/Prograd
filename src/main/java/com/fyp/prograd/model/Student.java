@@ -35,11 +35,11 @@ public class Student {
     private String firstName;
     private String surname;
     @Email
-    @NotEmpty(message = "Email is required")
+    @NotEmpty
     private String email;
-    @NotBlank(message = "Password is required")
+    @NotBlank
     private String password;
-    @NotBlank(message = "Username is required")
+    @NotBlank
     private String username;
     private String phone;
     private String socialUrl;

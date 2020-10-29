@@ -26,9 +26,9 @@ public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long positionId;
-    @NotBlank(message = "Position name is required")
+    @NotBlank
     private String positionName;
-    @NotBlank(message = "Position description is required")
+    @NotBlank
     private String positionDescription;
     @Nullable
     private double positionSalary;

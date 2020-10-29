@@ -25,7 +25,7 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long courseId;
-    @NotBlank(message = "Course name cannot be blank")
+    @NotBlank
     private String courseName;
     private String university;
     private int level;

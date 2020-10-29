@@ -1,7 +1,9 @@
 package com.fyp.prograd.controller;
 
 import com.fyp.prograd.dto.AuthenticationResponse;
+import com.fyp.prograd.dto.RefreshTokenRequest;
 import com.fyp.prograd.security.JwtProvider;
+import com.fyp.prograd.service.RefreshTokenService;
 import com.google.gson.Gson;
 import com.fyp.prograd.dto.LoginRequest;
 import com.fyp.prograd.dto.RegisterRequest;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,6 +49,7 @@ public class AuthController {
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping(value = "/signup", consumes = "application/json")
     @Transactional
@@ -88,8 +92,29 @@ public class AuthController {
                 loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = jwtProvider.generateToken(authenticate);
-        return new AuthenticationResponse(token, loginRequest.getUsername());
+        return new AuthenticationResponse(token, refreshTokenService.generateRefreshToken().getToken(),
+                Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()),
+                loginRequest.getUsername());
     }
+
+    @PostMapping("/refresh/token")
+    public AuthenticationResponse refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+        String token = jwtProvider.generateTokenWithUserName(refreshTokenRequest.getUsername());
+        return AuthenticationResponse.builder()
+                .authenticationToken(token)
+                .refreshToken(refreshTokenRequest.getRefreshToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .username(refreshTokenRequest.getUsername())
+                .build();
+    }
+
+    @PostMapping("logout")
+    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+        return new ResponseEntity<>("Refresh Token Deleted Successfully", HttpStatus.OK);
+    }
+
 
     @Transactional
     void fetchUserAndEnable(VerificationToken verificationToken) {
