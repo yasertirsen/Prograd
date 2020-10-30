@@ -8,7 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule} from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import {FontAwesomeModule} from "@fortawesome/angular-fontawesome";
@@ -23,6 +23,8 @@ import { MatListModule } from '@angular/material/list';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatCardModule} from "@angular/material/card";
+import {NgxWebstorageModule} from "ngx-webstorage";
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   declarations: [
@@ -32,13 +34,12 @@ import {MatCardModule} from "@angular/material/card";
     RegisterComponent,
     LoginComponent,
     NotFoundComponent,
-    MainNavComponent
+    MainNavComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     FontAwesomeModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -50,7 +51,10 @@ import {MatCardModule} from "@angular/material/card";
     MatListModule,
     MatFormFieldModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    NgxWebstorageModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

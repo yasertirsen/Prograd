@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/company")
+@RequestMapping("/api/companies")
 @AllArgsConstructor
 public class CompanyController {
 

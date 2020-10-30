@@ -40,9 +40,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity.cors().and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/auth/**")
+                .antMatchers("/api/students/**")
                 .permitAll()
-                .antMatchers(HttpMethod.GET,  "/api/course/**")
+                .antMatchers(HttpMethod.GET,  "/api/courses/**")
                 .permitAll()
                 .antMatchers("/v2/api-docs",
                         "/configuration/ui",
@@ -66,16 +66,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-    //Cross origin resource sharing.
-    @Bean
-    public WebMvcConfigurer corsConfigurer(){
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*").allowedMethods("*");
-            }
-        };
-    }
-
 }
