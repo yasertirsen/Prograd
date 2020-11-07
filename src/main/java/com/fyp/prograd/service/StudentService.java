@@ -3,20 +3,16 @@ package com.fyp.prograd.service;
 import com.fyp.prograd.dto.AuthenticationResponse;
 import com.fyp.prograd.dto.LoginRequest;
 import com.fyp.prograd.dto.RefreshTokenRequest;
-import com.fyp.prograd.dto.RegisterRequest;
 import com.fyp.prograd.exceptions.ProgradException;
-import com.fyp.prograd.model.NotificationEmail;
+import com.fyp.prograd.dto.NotificationEmail;
 import com.fyp.prograd.model.Student;
 import com.fyp.prograd.model.VerificationToken;
 import com.fyp.prograd.repository.StudentRepository;
 import com.fyp.prograd.repository.VerificationTokenRepository;
 import com.fyp.prograd.security.JwtProvider;
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -49,7 +45,10 @@ public class StudentService {
     private final RefreshTokenService refreshTokenService;
 
     @Autowired
-    public StudentService(PasswordEncoder passwordEncoder, StudentRepository studentRepository, VerificationTokenRepository verificationTokenRepository, MailService mailService, AuthenticationManager authenticationManager, JwtProvider jwtProvider, RefreshTokenService refreshTokenService) {
+    public StudentService(PasswordEncoder passwordEncoder, StudentRepository studentRepository,
+                          VerificationTokenRepository verificationTokenRepository, MailService mailService,
+                          AuthenticationManager authenticationManager, JwtProvider jwtProvider,
+                          RefreshTokenService refreshTokenService) {
         this.passwordEncoder = passwordEncoder;
         this.studentRepository = studentRepository;
         this.verificationTokenRepository = verificationTokenRepository;

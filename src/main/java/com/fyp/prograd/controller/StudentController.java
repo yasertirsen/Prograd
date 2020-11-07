@@ -39,7 +39,6 @@ import java.util.Optional;
 @AllArgsConstructor
 public class StudentController {
 
-    private final StudentRepository studentRepository;
     private final StudentService studentService;
 
     @PostMapping(value = "/register", consumes = "application/json")

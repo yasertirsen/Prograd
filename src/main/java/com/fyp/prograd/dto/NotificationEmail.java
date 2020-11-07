@@ -1,4 +1,4 @@
-package com.fyp.prograd.model;
+package com.fyp.prograd.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

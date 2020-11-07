@@ -1,6 +1,6 @@
 package com.fyp.prograd.service;
 
-import com.fyp.prograd.model.NotificationEmail;
+import com.fyp.prograd.dto.NotificationEmail;
 import com.fyp.prograd.exceptions.ProgradException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
