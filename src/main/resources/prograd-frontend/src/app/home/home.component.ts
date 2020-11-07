@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {CourseModel} from "../models/course.model";
+import {CourseService} from "../services/course.service";
 
 @Component({
   selector: 'app-home',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+  courses$: Array<CourseModel> = [];
+
+  constructor(private courseService: CourseService) {
+    this.courseService.getAllCourses().subscribe(course => {
+        this.courses$ = course;
+    });
+  }
 
   ngOnInit(): void {
   }

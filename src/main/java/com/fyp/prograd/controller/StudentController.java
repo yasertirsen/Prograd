@@ -43,17 +43,13 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping(value = "/register", consumes = "application/json")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
-        if(studentService.findByUsername(registerRequest.getUsername()) != null)
-            return new ResponseEntity<>(new Gson().toJson("USERNAME_EXISTS"), HttpStatus.CONFLICT);
-        if(studentService.findByEmail(registerRequest.getEmail()) != null)
-            return new ResponseEntity<>(new Gson().toJson("EMAIL_EXISTS"), HttpStatus.CONFLICT);
+    public ResponseEntity<?> register(@RequestBody Student student) {
 
-        return studentService.register(registerRequest);
+        return studentService.register(student);
     }
 
     @GetMapping("/verification/{token}")
-    public ResponseEntity<?> verifyAccount(@PathVariable String token) {
+    public String verifyAccount(@PathVariable String token) {
         return studentService.verifyAccount(token);
     }
 

@@ -1,1 +1,15 @@
-<p>home works!</p>
+<div class="container">
+  <div class="row">
+    <div class="offset-3"></div>
+    <div class="col-md-6">
+      <h4 class="text-center">Your Dashboard</h4>
+      <hr>
+      <div class="row-course" *ngFor="let course of courses$">
+        <p>Course Name: {{ course.courseName }}</p>
+        <p>University: {{ course.university }}</p>
+        <p>Level: {{ course.level }}</p>
+      </div>
+    </div>
+    <div class="offset-3"></div>
+  </div>
+</div>
