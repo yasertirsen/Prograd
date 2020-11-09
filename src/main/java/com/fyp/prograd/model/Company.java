@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.time.Instant;
 import java.util.Set;
 
 @Data
@@ -26,15 +27,17 @@ public class Company {
     private long companyId;
     @Email
     @NotEmpty
-    private String companyEmail;
+    private String email;
     @NotBlank
-    private String companyPassword;
+    private String password;
     @NotBlank
-    private String companyName;
+    private String name;
     private String companyUrl;
     private String address;
     private String recruiter;
     private String recruiterPhone;
+    private Instant created;
+    private boolean enabled;
     @OneToMany
     private Set<Student> hiredStudents;
 }

@@ -81,12 +81,12 @@ public class StudentService {
         return new ResponseEntity<>(new Gson().toJson("Student registration successful"), HttpStatus.OK);
     }
 
-    public String verifyAccount(String token) {
+    public ResponseEntity<?> verifyAccount(String token) {
         Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
         verificationToken.orElseThrow(() -> new ProgradException("Invalid Token"));
         fetchUserAndEnable(verificationToken.get());
 
-        return new Gson().toJson("Account Activated Successfully");
+        return new ResponseEntity<>(new Gson().toJson("Account Activated Successfully"), HttpStatus.OK);
     }
 
     private String generateVerificationToken(Student student) {
@@ -107,14 +107,19 @@ public class StudentService {
         studentRepository.save(student);
     }
 
-    public AuthenticationResponse login(LoginRequest loginRequest) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                loginRequest.getPassword()));
+    public AuthenticationResponse login(Student student) {
+        return getAuthenticationResponse(authenticationManager, student.getEmail(), student.getPassword(), jwtProvider, refreshTokenService);
+    }
+
+    static AuthenticationResponse getAuthenticationResponse(AuthenticationManager authenticationManager, String email,
+                                                            String password, JwtProvider jwtProvider, RefreshTokenService refreshTokenService) {
+        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,
+                password));
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = jwtProvider.generateToken(authenticate);
         return new AuthenticationResponse(token, refreshTokenService.generateRefreshToken().getToken(),
                 Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()),
-                loginRequest.getUsername());
+                email);
     }
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {

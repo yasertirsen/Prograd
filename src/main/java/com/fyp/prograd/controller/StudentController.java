@@ -48,13 +48,13 @@ public class StudentController {
     }
 
     @GetMapping("/verification/{token}")
-    public String verifyAccount(@PathVariable String token) {
+    public ResponseEntity<?> verifyAccount(@PathVariable String token) {
         return studentService.verifyAccount(token);
     }
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest) {
-        return studentService.login(loginRequest);
+    public AuthenticationResponse login(@RequestBody Student student) {
+        return studentService.login(student);
     }
 
     @PostMapping("/refresh/token")

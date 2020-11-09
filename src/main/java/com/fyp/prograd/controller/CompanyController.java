@@ -1,7 +1,11 @@
 package com.fyp.prograd.controller;
 
+import com.fyp.prograd.dto.AuthenticationResponse;
+import com.fyp.prograd.dto.LoginRequest;
 import com.fyp.prograd.model.Company;
+import com.fyp.prograd.model.Student;
 import com.fyp.prograd.repository.CompanyRepository;
+import com.fyp.prograd.service.CompanyService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,10 +28,32 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/companies")
-@AllArgsConstructor
 public class CompanyController {
 
     private final CompanyRepository companyRepository;
+    private final CompanyService companyService;
+
+    @Autowired
+    public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
+        this.companyRepository = companyRepository;
+        this.companyService = companyService;
+    }
+
+    @PostMapping(value = "/register", consumes = "application/json")
+    public ResponseEntity<?> register(@RequestBody Company company) {
+
+        return companyService.register(company);
+    }
+
+    @GetMapping("/verification/{token}")
+    public String verifyAccount(@PathVariable String token) {
+        return companyService.verifyAccount(token);
+    }
+
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody Company company) {
+        return companyService.login(company);
+    }
 
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
