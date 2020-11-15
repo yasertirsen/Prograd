@@ -52,8 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/webjars/**").permitAll()
                 .anyRequest()
                 .authenticated();
-        httpSecurity.addFilterBefore(jwtAuthenticationFilter,
-                UsernamePasswordAuthenticationFilter.class);
+//        httpSecurity.addFilterBefore(jwtAuthenticationFilter,
+//                UsernamePasswordAuthenticationFilter.class);
     }
 
     @Autowired

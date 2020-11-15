@@ -63,7 +63,7 @@ public class CourseController {
             else
                 courseRepository.save(course);
             //Update student courseId column
-            student.setCourse(course);
+//            student.setCourse(course);
             studentService.updateStudent(student);
             return new ResponseEntity<>("Course assigned to student - " + course.getCourseName(), HttpStatus.OK);
         }

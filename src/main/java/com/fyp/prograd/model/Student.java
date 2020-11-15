@@ -43,13 +43,13 @@ public class Student {
     private String phone;
     private String socialUrl;
     private Instant created;
-    private boolean enabled;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "resumeId", referencedColumnName = "resumeId")
-    private Resume resume;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "courseId", referencedColumnName = "courseId")
-    private Course course;
-    @OneToMany(cascade = CascadeType.ALL)
-    private Set<Skill> externalSkills;
+    private Boolean enabled;
+    private String role;
+    private String[] authorities;
+    private Boolean isLocked;
+    private Long expiresIn;
+    private String token;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "profileId", referencedColumnName = "profileId")
+    private StudentProfile profile;
 }

@@ -26,7 +26,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,11 +42,21 @@ import java.util.Optional;
 public class StudentController {
 
     private final StudentService studentService;
+    private final String AUTH_TOKEN = "x-api-key";
 
     @PostMapping(value = "/register", consumes = "application/json")
-    public ResponseEntity<?> register(@RequestBody Student student) {
-
+    public Student register(@RequestBody Student student) {
         return studentService.register(student);
+    }
+
+    @GetMapping(value = "/findByEmail")
+    public ResponseEntity<Student> findByEmail(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String email) {
+        return studentService.findByEmail(email);
+    }
+
+    @GetMapping(value = "/findByUsername")
+    public ResponseEntity<Student> findByUsername(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String username) {
+        return studentService.findByUsername(username);
     }
 
     @GetMapping("/verification/{token}")
@@ -53,7 +65,7 @@ public class StudentController {
     }
 
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody Student student) {
+    public AuthenticationResponse login(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Student student) {
         return studentService.login(student);
     }
 

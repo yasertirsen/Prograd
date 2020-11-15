@@ -11,6 +11,7 @@ import com.fyp.prograd.repository.StudentRepository;
 import com.fyp.prograd.repository.VerificationTokenRepository;
 import com.fyp.prograd.security.JwtProvider;
 import com.google.gson.Gson;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,10 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.transaction.Transactional;
 import java.time.Instant;
@@ -59,26 +63,30 @@ public class StudentService {
     }
 
 
-    public ResponseEntity<?> register(Student student) {
+    public Student register(Student student) {
 
-        if(studentRepository.existsByUsername(student.getUsername()))
-            return new ResponseEntity<>(new Gson().toJson("USERNAME_EXISTS"), HttpStatus.CONFLICT);
-        if(studentRepository.existsByEmail(student.getEmail()))
-            return new ResponseEntity<>(new Gson().toJson("EMAIL_EXISTS"), HttpStatus.CONFLICT);
+        Student newStudent = studentRepository.save(student);
 
-        student.setPassword(passwordEncoder.encode(student.getPassword()));
-        student.setCreated(Instant.now());
-        student.setEnabled(false);
+//        String token = generateVerificationToken(student);
+//        mailService.sendMail(new NotificationEmail("Account Activation - Prograd",
+//                student.getEmail(), "Thank you for signing up to Prograd, " +
+//                "please click the link below to activate your account " +
+//                "http://localhost:8083/verification/" + token));
+        return newStudent;
+    }
 
-        studentRepository.save(student);
+    public ResponseEntity<Student> findByEmail(@RequestBody String email) {
+        if(studentRepository.existsByEmail(email))
+            return new ResponseEntity<>(studentRepository.findByEmail(email), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 
-        String token = generateVerificationToken(student);
-        mailService.sendMail(new NotificationEmail("Account Activation - Prograd",
-                student.getEmail(), "Thank you for signing up to Prograd, " +
-                "please click the link below to activate your account " +
-                "http://localhost:8083/verification/" + token));
-
-        return new ResponseEntity<>(new Gson().toJson("Student registration successful"), HttpStatus.OK);
+    public ResponseEntity<Student> findByUsername(@RequestBody String username) {
+        if(studentRepository.existsByUsername(username))
+            return new ResponseEntity<>(studentRepository.findByUsername(username), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     public ResponseEntity<?> verifyAccount(String token) {
@@ -101,8 +109,7 @@ public class StudentService {
 
     void fetchUserAndEnable(VerificationToken verificationToken) {
         String username = verificationToken.getStudent().getUsername();
-        Student student = studentRepository.findByUsername(username)
-                .orElseThrow(() -> new ProgradException("User with name " + username + " was not found"));
+        Student student = studentRepository.findByUsername(username);
         student.setEnabled(true);
         studentRepository.save(student);
     }
@@ -163,8 +170,7 @@ public class StudentService {
     public Student getCurrentUser() {
         User principal = (User) SecurityContextHolder.
                 getContext().getAuthentication().getPrincipal();
-        return studentRepository.findByUsername(principal.getUsername())
-                .orElseThrow(() -> new UsernameNotFoundException("Username not found - " + principal.getUsername()));
+        return studentRepository.findByUsername(principal.getUsername());
     }
 
     public ResponseEntity<?> updateStudent(Student student) {
