@@ -24,6 +24,7 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
             case "/api/students/register":
             case "/api/students/findByEmail":
             case "/api/students/findByUsername":
+            case "/api/students/findByToken":
             case "/api/company/login":
             case "/api/company/register":
             case "/api/company/getByEmail":

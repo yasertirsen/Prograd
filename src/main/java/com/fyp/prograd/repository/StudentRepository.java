@@ -8,6 +8,8 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student, Long> {
     boolean existsByUsername(String username);
     boolean existsByEmail(String email);
+    boolean existsByToken(String token);
     Student findByUsername(String username);
     Student findByEmail(String email);
+    Student findByToken(String token);
 }

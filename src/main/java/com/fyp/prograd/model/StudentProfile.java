@@ -23,12 +23,6 @@ public class StudentProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long profileId;
-    @OneToOne
-    @JoinColumn(name = "studentId", referencedColumnName = "studentId")
-    private Student student;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "resumeId", referencedColumnName = "resumeId")
-    private Resume resume;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "courseId", referencedColumnName = "courseId")
     private Course course;

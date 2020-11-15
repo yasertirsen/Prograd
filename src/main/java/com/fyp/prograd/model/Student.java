@@ -52,4 +52,7 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profileId", referencedColumnName = "profileId")
     private StudentProfile profile;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "resumeId", referencedColumnName = "resumeId")
+    private Resume resume;
 }

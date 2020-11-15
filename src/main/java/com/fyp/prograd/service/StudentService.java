@@ -64,15 +64,7 @@ public class StudentService {
 
 
     public Student register(Student student) {
-
-        Student newStudent = studentRepository.save(student);
-
-//        String token = generateVerificationToken(student);
-//        mailService.sendMail(new NotificationEmail("Account Activation - Prograd",
-//                student.getEmail(), "Thank you for signing up to Prograd, " +
-//                "please click the link below to activate your account " +
-//                "http://localhost:8083/verification/" + token));
-        return newStudent;
+        return studentRepository.save(student);
     }
 
     public ResponseEntity<Student> findByEmail(@RequestBody String email) {
@@ -89,29 +81,11 @@ public class StudentService {
             return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    public ResponseEntity<?> verifyAccount(String token) {
-        Optional<VerificationToken> verificationToken = verificationTokenRepository.findByToken(token);
-        verificationToken.orElseThrow(() -> new ProgradException("Invalid Token"));
-        fetchUserAndEnable(verificationToken.get());
-
-        return new ResponseEntity<>(new Gson().toJson("Account Activated Successfully"), HttpStatus.OK);
-    }
-
-    private String generateVerificationToken(Student student) {
-        String token = UUID.randomUUID().toString();
-        VerificationToken verificationToken = new VerificationToken();
-        verificationToken.setToken(token);
-        verificationToken.setStudent(student);
-
-        verificationTokenRepository.save(verificationToken);
-        return token;
-    }
-
-    void fetchUserAndEnable(VerificationToken verificationToken) {
-        String username = verificationToken.getStudent().getUsername();
-        Student student = studentRepository.findByUsername(username);
-        student.setEnabled(true);
-        studentRepository.save(student);
+    public ResponseEntity<Student> findByToken(String token) {
+        if(studentRepository.existsByToken(token))
+            return new ResponseEntity<>(studentRepository.findByToken(token), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     public AuthenticationResponse login(Student student) {
@@ -127,17 +101,6 @@ public class StudentService {
         return new AuthenticationResponse(token, refreshTokenService.generateRefreshToken().getToken(),
                 Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()),
                 email);
-    }
-
-    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
-        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-        String token = jwtProvider.generateTokenWithUserName(refreshTokenRequest.getUsername());
-        return AuthenticationResponse.builder()
-                .authenticationToken(token)
-                .refreshToken(refreshTokenRequest.getRefreshToken())
-                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
-                .username(refreshTokenRequest.getUsername())
-                .build();
     }
 
     public ResponseEntity<String> logout(RefreshTokenRequest refreshTokenRequest) {
@@ -176,5 +139,4 @@ public class StudentService {
     public ResponseEntity<?> updateStudent(Student student) {
         return new ResponseEntity<>(studentRepository.save(student), HttpStatus.OK);
     }
-
 }

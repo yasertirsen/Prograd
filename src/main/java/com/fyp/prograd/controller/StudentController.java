@@ -59,19 +59,14 @@ public class StudentController {
         return studentService.findByUsername(username);
     }
 
-    @GetMapping("/verification/{token}")
-    public ResponseEntity<?> verifyAccount(@PathVariable String token) {
-        return studentService.verifyAccount(token);
+    @GetMapping(value = "/findByToken")
+    public ResponseEntity<Student> findByToken(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String token) {
+        return studentService.findByToken(token);
     }
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Student student) {
         return studentService.login(student);
-    }
-
-    @PostMapping("/refresh/token")
-    public AuthenticationResponse refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
-        return studentService.refreshToken(refreshTokenRequest);
     }
 
     @PostMapping("/logout")
