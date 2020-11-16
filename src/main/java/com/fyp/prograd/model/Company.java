@@ -5,16 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import java.time.Instant;
-import java.util.Set;
 
 @Data
 @Entity
@@ -37,7 +38,13 @@ public class Company {
     private String recruiter;
     private String recruiterPhone;
     private Instant created;
+    private String role;
+    private String[] authorities;
+    private Boolean isLocked;
+    private Long expiresIn;
+    private String token;
     private boolean enabled;
-    @OneToMany
-    private Set<Student> hiredStudents;
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "profileId", referencedColumnName = "profileId")
+    private CompanyProfile profile;
 }

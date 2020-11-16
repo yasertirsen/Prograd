@@ -1,12 +1,8 @@
 package com.fyp.prograd.controller;
 
-import com.fyp.prograd.dto.AuthenticationResponse;
-import com.fyp.prograd.dto.LoginRequest;
 import com.fyp.prograd.model.Company;
-import com.fyp.prograd.model.Student;
 import com.fyp.prograd.repository.CompanyRepository;
 import com.fyp.prograd.service.CompanyService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +13,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,6 +29,7 @@ public class CompanyController {
 
     private final CompanyRepository companyRepository;
     private final CompanyService companyService;
+    private final String AUTH_TOKEN = "x-api-key";
 
     @Autowired
     public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
@@ -40,19 +38,23 @@ public class CompanyController {
     }
 
     @PostMapping(value = "/register", consumes = "application/json")
-    public ResponseEntity<?> register(@RequestBody Company company) {
-
+    public Company register(@RequestBody Company company) {
         return companyService.register(company);
     }
 
-    @GetMapping("/verification/{token}")
-    public String verifyAccount(@PathVariable String token) {
-        return companyService.verifyAccount(token);
+    @GetMapping(value = "/findByEmail")
+    public ResponseEntity<Company> findByEmail(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String email) {
+        return companyService.findByEmail(email);
     }
 
-    @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody Company company) {
-        return companyService.login(company);
+    @GetMapping(value = "/findByName")
+    public ResponseEntity<Company> findByName(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String name) {
+        return companyService.findByName(name);
+    }
+
+    @GetMapping(value = "/findByToken")
+    public ResponseEntity<Company> findByToken(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String token) {
+        return companyService.findByToken(token);
     }
 
     @GetMapping(value = "/all", produces = "application/json")

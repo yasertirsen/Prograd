@@ -56,15 +56,15 @@ public class CourseController {
         if(result.hasErrors())
             return new ResponseEntity<>("Please check all course information is correct.", HttpStatus.BAD_REQUEST);
         else{
-            Student student = studentService.getCurrentUser();
+//            Student student = studentService.getCurrentUser();
             //If course already exists
-            if(findByCourseName(course.getCourseName(), course.getUniversity()) != null)
-                course = findByCourseName(course.getCourseName(), course.getUniversity());
-            else
-                courseRepository.save(course);
-            //Update student courseId column
+//            if(findByCourseName(course.getCourseName(), course.getUniversity()) != null)
+//                course = findByCourseName(course.getCourseName(), course.getUniversity());
+//            else
+//                courseRepository.save(course);
+//            //Update student courseId column
 //            student.setCourse(course);
-            studentService.updateStudent(student);
+//            studentService.updateStudent(student);
             return new ResponseEntity<>("Course assigned to student - " + course.getCourseName(), HttpStatus.OK);
         }
     }

@@ -1,65 +1,26 @@
 package com.fyp.prograd.service;
 
-import com.fyp.prograd.dto.AuthenticationResponse;
-import com.fyp.prograd.dto.LoginRequest;
-import com.fyp.prograd.dto.RefreshTokenRequest;
-import com.fyp.prograd.exceptions.ProgradException;
-import com.fyp.prograd.dto.NotificationEmail;
 import com.fyp.prograd.model.Student;
-import com.fyp.prograd.model.VerificationToken;
 import com.fyp.prograd.repository.StudentRepository;
-import com.fyp.prograd.repository.VerificationTokenRepository;
-import com.fyp.prograd.security.JwtProvider;
-import com.google.gson.Gson;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 
 import javax.transaction.Transactional;
-import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @Service
 @Transactional
 public class StudentService {
 
-    private final PasswordEncoder passwordEncoder;
     private final StudentRepository studentRepository;
-    private final VerificationTokenRepository verificationTokenRepository;
-    private final MailService mailService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtProvider jwtProvider;
-    private final RefreshTokenService refreshTokenService;
 
     @Autowired
-    public StudentService(PasswordEncoder passwordEncoder, StudentRepository studentRepository,
-                          VerificationTokenRepository verificationTokenRepository, MailService mailService,
-                          AuthenticationManager authenticationManager, JwtProvider jwtProvider,
-                          RefreshTokenService refreshTokenService) {
-        this.passwordEncoder = passwordEncoder;
+    public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.verificationTokenRepository = verificationTokenRepository;
-        this.mailService = mailService;
-        this.authenticationManager = authenticationManager;
-        this.jwtProvider = jwtProvider;
-        this.refreshTokenService = refreshTokenService;
     }
 
 
@@ -88,24 +49,8 @@ public class StudentService {
             return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    public AuthenticationResponse login(Student student) {
-        return getAuthenticationResponse(authenticationManager, student.getEmail(), student.getPassword(), jwtProvider, refreshTokenService);
-    }
-
-    static AuthenticationResponse getAuthenticationResponse(AuthenticationManager authenticationManager, String email,
-                                                            String password, JwtProvider jwtProvider, RefreshTokenService refreshTokenService) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(email,
-                password));
-        SecurityContextHolder.getContext().setAuthentication(authenticate);
-        String token = jwtProvider.generateToken(authenticate);
-        return new AuthenticationResponse(token, refreshTokenService.generateRefreshToken().getToken(),
-                Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()),
-                email);
-    }
-
-    public ResponseEntity<String> logout(RefreshTokenRequest refreshTokenRequest) {
-        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
-        return new ResponseEntity<>("Refresh Token Deleted Successfully", HttpStatus.OK);
+    public Student login(Student student) {
+        return studentRepository.save(student);
     }
 
 
@@ -130,13 +75,13 @@ public class StudentService {
     }
 
 
-    public Student getCurrentUser() {
-        User principal = (User) SecurityContextHolder.
-                getContext().getAuthentication().getPrincipal();
-        return studentRepository.findByUsername(principal.getUsername());
-    }
+//    public Student getCurrentUser() {
+//        User principal = (User) SecurityContextHolder.
+//                getContext().getAuthentication().getPrincipal();
+//        return studentRepository.findByUsername(principal.getUsername());
+//    }
 
-    public ResponseEntity<?> updateStudent(Student student) {
-        return new ResponseEntity<>(studentRepository.save(student), HttpStatus.OK);
+    public Student updateStudent(Student student) {
+        return studentRepository.save(student);
     }
 }
