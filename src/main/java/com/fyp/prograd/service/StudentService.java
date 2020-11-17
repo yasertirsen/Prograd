@@ -24,7 +24,11 @@ public class StudentService {
     }
 
 
-    public Student register(Student student) {
+    public Student add(Student student) {
+        return studentRepository.save(student);
+    }
+
+    public Student updateStudent(Student student) {
         return studentRepository.save(student);
     }
 
@@ -72,16 +76,5 @@ public class StudentService {
         }catch(Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-
-//    public Student getCurrentUser() {
-//        User principal = (User) SecurityContextHolder.
-//                getContext().getAuthentication().getPrincipal();
-//        return studentRepository.findByUsername(principal.getUsername());
-//    }
-
-    public Student updateStudent(Student student) {
-        return studentRepository.save(student);
     }
 }

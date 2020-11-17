@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 
 @Service
@@ -17,12 +18,8 @@ public class CompanyService {
 
     private CompanyRepository companyRepository;
 
-    public Company register(Company company) {
+    public Company add(Company company) {
         return companyRepository.save(company);
-    }
-
-    public Company login(Company company) {
-        return companyRepository.findByEmail(company.getEmail());
     }
 
     public ResponseEntity<Company> findByEmail(String email) {
@@ -45,5 +42,24 @@ public class CompanyService {
             return new ResponseEntity<>(companyRepository.findByToken(token), HttpStatus.OK);
         else
             return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
+    public Company update(Company company) {
+        return companyRepository.save(company);
+    }
+
+    public List<Company> getAllCompanies() {
+        return companyRepository.findAll();
+    }
+
+    public ResponseEntity<String> delete(Long id) {
+        if(!companyRepository.existsById(id))
+            return new ResponseEntity<>("Company with the id " + id + " not found!", HttpStatus.BAD_REQUEST);
+        try {
+            companyRepository.deleteById(id);
+            return new ResponseEntity<>("Company with ID " + id + " has been deleted.", HttpStatus.OK);
+        }catch(Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

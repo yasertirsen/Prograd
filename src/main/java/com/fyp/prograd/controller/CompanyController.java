@@ -27,19 +27,17 @@ import java.util.List;
 @RequestMapping("/api/companies")
 public class CompanyController {
 
-    private final CompanyRepository companyRepository;
     private final CompanyService companyService;
     private final String AUTH_TOKEN = "x-api-key";
 
     @Autowired
-    public CompanyController(CompanyRepository companyRepository, CompanyService companyService) {
-        this.companyRepository = companyRepository;
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
 
-    @PostMapping(value = "/register", consumes = "application/json")
-    public Company register(@RequestBody Company company) {
-        return companyService.register(company);
+    @PostMapping(value = "/add", consumes = "application/json")
+    public Company add(@RequestBody Company company) {
+        return companyService.add(company);
     }
 
     @GetMapping(value = "/findByEmail")
@@ -59,43 +57,19 @@ public class CompanyController {
 
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
-    @Transactional
-    public ResponseEntity<?> getAllCompanies() {
-        List<Company> companies = companyRepository.findAll();
-        if(companies.isEmpty())
-            return new ResponseEntity<>("No Company users were found", HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(companies, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/add", consumes = "application/json")
-    @ResponseBody
-    @Transactional
-    public ResponseEntity<?> addCompany(@Valid @RequestBody Company company, BindingResult result) {
-        if(result.hasErrors())
-            return new ResponseEntity<>("Please check all company information is correct.",HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(companyRepository.save(company), HttpStatus.CREATED);
+    public List<Company> getAllCompanies(@RequestHeader(AUTH_TOKEN) String bearerToken) {
+        return companyService.getAllCompanies();
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    @Transactional
-    public ResponseEntity<?> deleteCompany(@PathVariable Long id) {
-        if(!companyRepository.existsById(id))
-            return new ResponseEntity<>("Company with the id " + id + " not found!", HttpStatus.BAD_REQUEST);
-        try {
-            companyRepository.deleteById(id);
-            return new ResponseEntity<>("Company with ID " + id + " has been deleted.", HttpStatus.OK);
-        }catch(Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<String> delete(@RequestHeader(AUTH_TOKEN) String bearerToken, @PathVariable Long id) {
+        return companyService.delete(id);
     }
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
-    @Transactional
-    public ResponseEntity<?> updateStudent(Company company, BindingResult bindingResult){
-        if(bindingResult.hasErrors())
-            return new ResponseEntity<>("Some error message",HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(companyRepository.save(company), HttpStatus.OK);
+    public Company update(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Company company){
+        return companyService.update(company);
     }
 
 }

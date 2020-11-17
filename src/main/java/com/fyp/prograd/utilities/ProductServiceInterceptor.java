@@ -21,12 +21,13 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
 
         switch (request.getRequestURI()) {
             case "/api/students/login":
-            case "/api/students/register":
+            case "/api/students/add":
+            case "/api/students/update":
             case "/api/students/findByEmail":
             case "/api/students/findByUsername":
             case "/api/students/findByToken":
-            case "/api/companies/login":
-            case "/api/companies/register":
+            case "/api/companies/update":
+            case "/api/companies/add":
             case "/api/companies/findByEmail":
             case "/api/companies/findByName":
             case "/api/companies/findByToken":

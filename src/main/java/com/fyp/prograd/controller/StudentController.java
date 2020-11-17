@@ -28,9 +28,9 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping(value = "/register", consumes = "application/json")
-    public Student register(@RequestBody Student student) {
-        return studentService.register(student);
+    @PostMapping(value = "/add", consumes = "application/json")
+    public Student add(@RequestBody Student student) {
+        return studentService.add(student);
     }
 
     @GetMapping(value = "/findByEmail")
@@ -48,19 +48,9 @@ public class StudentController {
         return studentService.findByToken(token);
     }
 
-    @PostMapping("/login")
-    public Student login(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Student student) {
-        return studentService.login(student);
-    }
-
-//    @PostMapping("/logout")
-//    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest) {
-//        return studentService.logout(refreshTokenRequest);
-//    }
-
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> getAllStudents() {
+    public ResponseEntity<?> getAllStudents(@RequestHeader(AUTH_TOKEN) String bearerToken) {
         return studentService.getAllStudents();
     }
 
@@ -71,7 +61,7 @@ public class StudentController {
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
-    public Student update(@RequestHeader(AUTH_TOKEN) String bearerToken, Student student){
+    public Student update(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Student student){
         return studentService.updateStudent(student);
     }
 }
