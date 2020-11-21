@@ -17,7 +17,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Course {
@@ -26,9 +25,10 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long courseId;
     @NotBlank
-    private String courseName;
+    private String name;
     private String university;
     private int level;
+    private String url;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Module> modules;
 }

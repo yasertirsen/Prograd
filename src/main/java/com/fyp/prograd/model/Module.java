@@ -28,8 +28,8 @@ public class Module {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long moduleId;
-    private String moduleName;
+    private String name;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "skillId", referencedColumnName = "skillId")
-    private Skill moduleSkill;
+    private Skill skill;
 }
