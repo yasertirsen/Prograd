@@ -19,7 +19,6 @@ import java.util.Date;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Payment {

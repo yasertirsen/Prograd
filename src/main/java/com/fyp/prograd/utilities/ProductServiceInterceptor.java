@@ -32,6 +32,9 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
             case "/api/companies/findByName":
             case "/api/companies/findByToken":
             case "/api/courses/add":
+            case "/api/positions/add":
+            case "/api/positions/all":
+            case "/api/positions/findById":
                 break;
             default:
                 return verifyUserToken(request);

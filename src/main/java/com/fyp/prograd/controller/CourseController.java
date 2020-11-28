@@ -24,7 +24,6 @@ import java.util.List;
 @AllArgsConstructor
 public class CourseController {
 
-    private final CourseRepository courseRepository;
     private final CourseService courseService;
     private final String AUTH_TOKEN = "x-api-key";
 

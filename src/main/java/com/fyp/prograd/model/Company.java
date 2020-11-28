@@ -19,7 +19,6 @@ import java.time.Instant;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Company {

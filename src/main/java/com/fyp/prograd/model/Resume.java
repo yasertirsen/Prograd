@@ -16,7 +16,6 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Resume {

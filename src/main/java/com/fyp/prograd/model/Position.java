@@ -18,7 +18,6 @@ import java.util.Set;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Position {
@@ -27,13 +26,13 @@ public class Position {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long positionId;
     @NotBlank
-    private String positionName;
+    private String title;
     @NotBlank
-    private String positionDescription;
+    private String description;
     @Nullable
-    private double positionSalary;
+    private double salary;
     @Nullable
-    private String positionUrl;
+    private String url;
     private int clicks;
     @ManyToOne
     @JoinColumn(name = "companyId", referencedColumnName = "companyId")

@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Review {

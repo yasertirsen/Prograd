@@ -18,7 +18,6 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 @Entity
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Skill {
