@@ -12,11 +12,9 @@ import java.util.List;
 public class PositionService {
 
     private final PositionRepository positionRepository;
-    private final CompanyRepository companyRepository;
 
-    public PositionService(PositionRepository positionRepository, CompanyRepository companyRepository) {
+    public PositionService(PositionRepository positionRepository) {
         this.positionRepository = positionRepository;
-        this.companyRepository = companyRepository;
     }
 
     public Position add(Position position) {

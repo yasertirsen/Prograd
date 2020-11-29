@@ -41,4 +41,14 @@ public class CourseController {
     public ResponseEntity<?> findById(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam Long id) {
         return courseService.findById(id);
     }
+
+    @GetMapping(value = "/existsByNameAndUniversity", produces = "application/json")
+    public boolean existsByNameAndUniversity(@RequestHeader(AUTH_TOKEN) String bearerToken, Course course) {
+       return courseService.existsByNameAndUniversity(course);
+    }
+
+    @GetMapping(value = "/findByNameAndUniversity", produces = "application/json")
+    public Course findByNameAndUniversity(@RequestHeader(AUTH_TOKEN) String bearerToken, Course course) {
+        return courseService.findByNameAndUniversity(course);
+    }
 }

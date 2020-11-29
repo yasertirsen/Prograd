@@ -37,4 +37,12 @@ public class CourseService {
             return new ResponseEntity<>(new Course(), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(courseRepository.findByCourseId(id), HttpStatus.OK);
     }
+
+    public boolean existsByNameAndUniversity(Course course) {
+        return courseRepository.existsByNameAndUniversity(course.getName(), course.getUniversity());
+    }
+
+    public Course findByNameAndUniversity(Course course) {
+        return courseRepository.findByNameAndUniversity(course.getName(), course.getUniversity());
+    }
 }
