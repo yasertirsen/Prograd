@@ -20,10 +20,6 @@ public class PositionService {
     }
 
     public Position add(Position position) {
-        position = new Position();
-        position.setTitle("Graduate Software Developer");
-        position.setDescription("Description");
-        position.setCompany(companyRepository.findByEmail("company8@demo.com"));
         return positionRepository.save(position);
     }
 
