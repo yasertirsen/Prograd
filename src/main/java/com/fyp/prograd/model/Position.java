@@ -30,6 +30,7 @@ public class Position {
     @NotBlank
     private String description;
     private String location;
+    private String date;
     @Nullable
     private double salary;
     @Nullable
