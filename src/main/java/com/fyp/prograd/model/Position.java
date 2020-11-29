@@ -29,6 +29,7 @@ public class Position {
     private String title;
     @NotBlank
     private String description;
+    private String location;
     @Nullable
     private double salary;
     @Nullable
