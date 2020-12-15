@@ -28,7 +28,7 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(Student student) {
+    public Student updateStudent(@RequestBody Student student) {
         return studentRepository.save(student);
     }
 

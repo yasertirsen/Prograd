@@ -33,7 +33,7 @@ public class CourseController {
     }
 
     @GetMapping(value = "/all", produces = "application/json")
-    public List<Course> getAll() {
+    public List<Course> getAll(@RequestHeader(AUTH_TOKEN) String bearerToken) {
         return courseService.getAll();
     }
 
