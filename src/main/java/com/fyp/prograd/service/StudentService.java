@@ -1,6 +1,8 @@
 package com.fyp.prograd.service;
 
 import com.fyp.prograd.model.Student;
+import com.fyp.prograd.model.StudentProfile;
+import com.fyp.prograd.repository.StudentProfileRepository;
 import com.fyp.prograd.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,10 +19,12 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final StudentProfileRepository profileRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, StudentProfileRepository profileRepository) {
         this.studentRepository = studentRepository;
+        this.profileRepository = profileRepository;
     }
 
 
@@ -76,5 +80,9 @@ public class StudentService {
         }catch(Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public List<StudentProfile> getAllProfiles() {
+        return profileRepository.findAll();
     }
 }

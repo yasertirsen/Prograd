@@ -1,6 +1,7 @@
 package com.fyp.prograd.controller;
 
 import com.fyp.prograd.model.Student;
+import com.fyp.prograd.model.StudentProfile;
 import com.fyp.prograd.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/students")
@@ -52,6 +55,12 @@ public class StudentController {
     @ResponseBody
     public ResponseEntity<?> getAllStudents(@RequestHeader(AUTH_TOKEN) String bearerToken) {
         return studentService.getAllStudents();
+    }
+
+    @GetMapping(value = "/profiles", produces = "application/json")
+    @ResponseBody
+    public List<StudentProfile> getAllProfiles(@RequestHeader(AUTH_TOKEN) String bearerToken) {
+        return studentService.getAllProfiles();
     }
 
 //    @DeleteMapping(value = "/delete/{id}")
