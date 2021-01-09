@@ -1,6 +1,7 @@
 package com.fyp.prograd.service;
 
 import com.fyp.prograd.model.Company;
+import com.fyp.prograd.model.Position;
 import com.fyp.prograd.repository.CompanyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
 
 
 @Service

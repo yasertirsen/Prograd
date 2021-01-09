@@ -21,6 +21,4 @@ public class CompanyProfile {
     private long profileId;
     @OneToMany
     Set<Student> hiredStudents;
-    @OneToMany
-    Set<Position> positions;
 }

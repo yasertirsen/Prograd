@@ -1,20 +1,14 @@
 package com.fyp.prograd.controller;
 
 import com.fyp.prograd.exceptions.JobNotFoundException;
+import com.fyp.prograd.model.Company;
 import com.fyp.prograd.model.Position;
 import com.fyp.prograd.service.PositionService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/positions")
@@ -47,5 +41,10 @@ public class PositionController {
     @ResponseBody
     public Position update(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Position position) {
         return positionService.update(position);
+    }
+
+    @GetMapping(value= "/getCompanyPositions/{companyId}", produces = "application/json")
+    Set<Position> getCompanyPositions(@RequestHeader(AUTH_TOKEN) String bearerToken, @PathVariable Long companyId) {
+        return positionService.getCompanyPositions(companyId);
     }
 }

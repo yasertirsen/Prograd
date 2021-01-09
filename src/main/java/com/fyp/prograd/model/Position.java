@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.Entity;
@@ -40,5 +42,6 @@ public class Position {
     @JoinColumn(name = "companyId", referencedColumnName = "companyId")
     private Company company;
     @OneToMany
+    @Cascade(CascadeType.ALL)
     private Set<Skill> requirements;
 }
