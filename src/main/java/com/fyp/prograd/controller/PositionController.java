@@ -28,7 +28,7 @@ public class PositionController {
     }
 
     @GetMapping(value = "/all", produces = "application/json")
-    public List<Position> getAll() {
+    public List<Position> getAll(@RequestHeader(AUTH_TOKEN) String bearerToken) {
         return positionService.getAll();
     }
 

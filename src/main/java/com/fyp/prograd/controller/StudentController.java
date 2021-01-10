@@ -63,10 +63,10 @@ public class StudentController {
         return studentService.getAllProfiles();
     }
 
-//    @DeleteMapping(value = "/delete/{id}")
-//    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
-//        return studentService.deleteStudent(id);
-//    }
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<?> deleteStudent(@PathVariable Long id) {
+        return studentService.deleteStudent(id);
+    }
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody

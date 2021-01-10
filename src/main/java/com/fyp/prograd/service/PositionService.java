@@ -31,7 +31,7 @@ public class PositionService {
 
 
     public Position findById(Long id) throws JobNotFoundException {
-        if(positionRepository.existsById(id))
+        if(!positionRepository.existsById(id))
             throw new JobNotFoundException("Position with id " + id + " was not found");
         return positionRepository.findByPositionId(id);
     }

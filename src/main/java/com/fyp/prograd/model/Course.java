@@ -27,7 +27,7 @@ public class Course {
     @NotBlank
     private String name;
     private String university;
-    private int level;
+    private String level;
     private String url;
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Module> modules;

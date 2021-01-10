@@ -20,20 +20,9 @@ public class ProductServiceInterceptor implements HandlerInterceptor {
             (HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         switch (request.getRequestURI()) {
-            case "/api/students/login":
             case "/api/students/add":
-            case "/api/students/all":
-            case "/api/students/update":
-            case "/api/students/findByEmail":
-            case "/api/students/findByUsername":
-            case "/api/students/findByToken":
-            case "/api/companies/update":
             case "/api/companies/add":
-            case "/api/companies/findByEmail":
-            case "/api/companies/findByName":
-            case "/api/companies/findByToken":
-            case "/api/courses/add":
-            case "/api/positions/add":
+            case "/error":
                 break;
             default:
                 return verifyUserToken(request);

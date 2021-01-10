@@ -28,7 +28,7 @@ public class CourseController {
     private final String AUTH_TOKEN = "x-api-key";
 
     @PostMapping(value = "/add", consumes = "application/json")
-    public Course add(@Valid @RequestBody Course course){
+    public Course add(@RequestHeader(AUTH_TOKEN) String bearerToken, @Valid @RequestBody Course course){
         return courseService.add(course);
     }
 

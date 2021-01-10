@@ -1,5 +1,6 @@
 package com.fyp.prograd.utilities;
 
+import com.fyp.prograd.model.Skill;
 import com.fyp.prograd.model.Student;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -21,6 +22,7 @@ import com.itextpdf.text.pdf.draw.LineSeparator;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 
 public class PDFGenerator {
 
@@ -97,9 +99,12 @@ public class PDFGenerator {
             Paragraph skillsContent = new Paragraph();
             skillsContent.setSpacingBefore(8);
             List skillsList = new List();
-            skillsList.add(new ListItem("SKILL 1", regular));
-            skillsList.add(new ListItem("SKILL 2", regular));
-            skillsList.add(new ListItem("SKILL 3", regular));
+            ArrayList<Skill> skillsArrayList = new ArrayList<>(student.getProfile().getExternalSkills());
+            if(!skillsArrayList.isEmpty()) {
+                skillsList.add(new ListItem(skillsArrayList.get(1).getSkillName(), regular));
+                skillsList.add(new ListItem(skillsArrayList.get(2).getSkillName(), regular));
+                skillsList.add(new ListItem(skillsArrayList.get(3).getSkillName(), regular));
+            }
             skillsContent.add(skillsList);
             skills.add(lsPar);
             document.add(skillsContent);
