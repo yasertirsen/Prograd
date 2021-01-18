@@ -12,6 +12,16 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @RestControllerAdvice
 public class ProgradExceptionHandler {
 
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<HttpCustomResponse> userNotFoundException() {
+        return createHttpResponse(BAD_REQUEST, USER_NOT_FOUND);
+    }
+
+    @ExceptionHandler(CourseNotFoundException.class)
+    public ResponseEntity<HttpCustomResponse> courseNotFoundException() {
+        return createHttpResponse(BAD_REQUEST, COURSE_WAS_NOT_FOUND);
+    }
+
     @ExceptionHandler(JobNotFoundException.class)
     public ResponseEntity<HttpCustomResponse> jobNotFoundException() {
         return createHttpResponse(BAD_REQUEST, NO_JOB_FOUND);

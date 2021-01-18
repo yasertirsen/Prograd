@@ -1,7 +1,10 @@
 package com.fyp.prograd.service;
 
+import com.fyp.prograd.exceptions.UserNotFoundException;
+import com.fyp.prograd.model.Skill;
 import com.fyp.prograd.model.Student;
 import com.fyp.prograd.model.StudentProfile;
+import com.fyp.prograd.repository.SkillRepository;
 import com.fyp.prograd.repository.StudentProfileRepository;
 import com.fyp.prograd.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -20,11 +26,13 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentProfileRepository profileRepository;
+    private final SkillRepository skillRepository;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, StudentProfileRepository profileRepository) {
+    public StudentService(StudentRepository studentRepository, StudentProfileRepository profileRepository, SkillRepository skillRepository) {
         this.studentRepository = studentRepository;
         this.profileRepository = profileRepository;
+        this.skillRepository = skillRepository;
     }
 
 
@@ -32,8 +40,18 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public Student updateStudent(@RequestBody Student student) {
-        return studentRepository.save(student);
+    public Student updateStudent(Student student) throws UserNotFoundException {
+        if(studentRepository.existsById(student.getStudentId())) {
+            return studentRepository.save(student);
+        }
+        throw new UserNotFoundException();
+    }
+
+    public StudentProfile updateProfile(StudentProfile profile) throws UserNotFoundException {
+        if(profileRepository.existsById(profile.getProfileId())) {
+            return profileRepository.saveAndFlush(profile);
+        }
+        throw new UserNotFoundException();
     }
 
     public ResponseEntity<Student> findByEmail(@RequestBody String email) {
@@ -57,11 +75,6 @@ public class StudentService {
             return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    public Student login(Student student) {
-        return studentRepository.save(student);
-    }
-
-
     public ResponseEntity<?> getAllStudents() {
 
         List<Student> students= studentRepository.findAll();
@@ -84,5 +97,13 @@ public class StudentService {
 
     public List<StudentProfile> getAllProfiles() {
         return profileRepository.findAll();
+    }
+
+    public List<String> getSkillsNames(StudentProfile profile) {
+        List<String> skillNames = new ArrayList<>();
+        for(Skill skill : profile.getExternalSkills()) {
+            skillNames.add(skill.getSkillName());
+        }
+        return skillNames;
     }
 }

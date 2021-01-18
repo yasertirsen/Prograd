@@ -1,5 +1,6 @@
 package com.fyp.prograd.controller;
 
+import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Student;
 import com.fyp.prograd.model.StudentProfile;
 import com.fyp.prograd.service.StudentService;
@@ -70,7 +71,18 @@ public class StudentController {
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
-    public Student update(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Student student){
+    public Student update(@RequestBody Student student) throws UserNotFoundException {
         return studentService.updateStudent(student);
+    }
+
+    @PutMapping(value = "/updateProfile", consumes = "application/json", produces="application/json")
+    @ResponseBody
+    public StudentProfile updateProfile(@RequestBody StudentProfile profile) throws UserNotFoundException {
+        return studentService.updateProfile(profile);
+    }
+
+    @PostMapping("/getSkillsNames")
+    public List<String> getSkillsNames(@RequestBody StudentProfile profile) {
+        return studentService.getSkillsNames(profile);
     }
 }
