@@ -23,10 +23,8 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
-    private ReviewType reviewType;
+    private String reviewType;
     @Lob
     private String reviewContent;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "companyId", referencedColumnName = "companyId")
-    private Company company;
+    private Long studentId;
 }

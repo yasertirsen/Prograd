@@ -1,24 +1,35 @@
 package com.fyp.prograd.service;
 
+import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Company;
-import com.fyp.prograd.model.Position;
+import com.fyp.prograd.model.CompanyProfile;
+import com.fyp.prograd.model.Review;
+import com.fyp.prograd.repository.CompanyProfileRepository;
 import com.fyp.prograd.repository.CompanyRepository;
-import lombok.AllArgsConstructor;
+import com.fyp.prograd.repository.ReviewRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Set;
 
 
 @Service
 @Transactional
-@AllArgsConstructor
 public class CompanyService {
 
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
+    private final ReviewRepository reviewRepository;
+    private final CompanyProfileRepository profileRepository;
+
+    @Autowired
+    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository, CompanyProfileRepository profileRepository) {
+        this.companyRepository = companyRepository;
+        this.reviewRepository = reviewRepository;
+        this.profileRepository = profileRepository;
+    }
 
     public Company add(Company company) {
         return companyRepository.save(company);
@@ -63,5 +74,20 @@ public class CompanyService {
         }catch(Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    public Review review(Review review) {
+        return reviewRepository.save(review);
+    }
+
+    public List<Review> getCompanyReviews(String name) {
+        return null;
+    }
+
+    public CompanyProfile updateProfile(CompanyProfile profile) throws UserNotFoundException {
+        if(profileRepository.existsById(profile.getProfileId())) {
+            return profileRepository.save(profile);
+        }
+        throw new UserNotFoundException();
     }
 }

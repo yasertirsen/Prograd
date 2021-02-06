@@ -1,6 +1,9 @@
 package com.fyp.prograd.controller;
 
+import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Company;
+import com.fyp.prograd.model.CompanyProfile;
+import com.fyp.prograd.model.Review;
 import com.fyp.prograd.repository.CompanyRepository;
 import com.fyp.prograd.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,35 +44,50 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/findByEmail")
-    public ResponseEntity<Company> findByEmail(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String email) {
+    public ResponseEntity<Company> findByEmail(@RequestParam String email) {
         return companyService.findByEmail(email);
     }
 
     @GetMapping(value = "/findByName")
-    public ResponseEntity<Company> findByName(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String name) {
+    public ResponseEntity<Company> findByName(@RequestParam String name) {
         return companyService.findByName(name);
     }
 
     @GetMapping(value = "/findByToken")
-    public ResponseEntity<Company> findByToken(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String token) {
+    public ResponseEntity<Company> findByToken(@RequestParam String token) {
         return companyService.findByToken(token);
     }
 
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
-    public List<Company> getAllCompanies(@RequestHeader(AUTH_TOKEN) String bearerToken) {
+    public List<Company> getAllCompanies() {
         return companyService.getAllCompanies();
     }
 
     @DeleteMapping(value = "/delete/{id}")
-    public ResponseEntity<String> delete(@RequestHeader(AUTH_TOKEN) String bearerToken, @PathVariable Long id) {
+    public ResponseEntity<String> delete(@PathVariable Long id) {
         return companyService.delete(id);
     }
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
-    public Company update(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Company company){
+    public Company update(@RequestBody Company company){
         return companyService.update(company);
+    }
+
+    @PostMapping("/review")
+    public Review review(@RequestBody Review review) {
+        return companyService.review(review);
+    }
+
+    @GetMapping("/reviews")
+    public List<Review> getCompanyReviews(@RequestParam String name){
+        return companyService.getCompanyReviews(name);
+    }
+
+    @PutMapping("/updateProfile")
+    public CompanyProfile updateProfile(@RequestBody CompanyProfile profile) throws UserNotFoundException {
+        return companyService.updateProfile(profile);
     }
 
 }
