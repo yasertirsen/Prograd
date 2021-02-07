@@ -23,8 +23,12 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long reviewId;
-    private String reviewType;
+    private String type;
     @Lob
-    private String reviewContent;
+    private String content;
+    @Lob
+    private String questions;
+    private boolean hired;
+    private boolean interviewed;
     private Long studentId;
 }
