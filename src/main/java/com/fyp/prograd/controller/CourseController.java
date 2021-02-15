@@ -31,7 +31,7 @@ public class CourseController {
     }
 
     @GetMapping(value = "/findById", produces = "application/json")
-    public ResponseEntity<?> findById(@RequestParam Long id) {
+    public Course findById(@RequestParam Long id) throws CourseNotFoundException {
         return courseService.findById(id);
     }
 

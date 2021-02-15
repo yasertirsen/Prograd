@@ -39,10 +39,11 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public ResponseEntity<Course> findById(Long id) {
-        if(!courseRepository.existsById(id))
-            return new ResponseEntity<>(new Course(), HttpStatus.BAD_REQUEST);
-        return new ResponseEntity<>(courseRepository.findByCourseId(id), HttpStatus.OK);
+    public Course findById(Long id) throws CourseNotFoundException {
+        if(courseRepository.existsById(id))
+            return courseRepository.findByCourseId(id);
+        else
+            throw new CourseNotFoundException();
     }
 
     public boolean existsByNameAndUniversity(Course course) {

@@ -1,17 +1,18 @@
 package com.fyp.prograd.controller;
 
-import com.fyp.prograd.exceptions.ProgradException;
 import com.fyp.prograd.model.Image;
+import com.fyp.prograd.model.Resume;
 import com.fyp.prograd.repository.ImageRepository;
+import com.fyp.prograd.repository.ResumeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
 
@@ -21,10 +22,18 @@ import java.util.zip.Inflater;
 public class FileController {
 
     private final ImageRepository imageRepository;
+    private final ResumeRepository resumeRepository;
 
     @Autowired
-    public FileController(ImageRepository imageRepository) {
+    public FileController(ImageRepository imageRepository, ResumeRepository resumeRepository) {
         this.imageRepository = imageRepository;
+        this.resumeRepository = resumeRepository;
+    }
+
+    @PostMapping(value = "/saveCv")
+    public ResponseEntity<String> uploadImage(@RequestBody Resume resume) {
+        resumeRepository.save(resume);
+        return new ResponseEntity<>("saved successfully", HttpStatus.OK);
     }
 
     @PostMapping(value = "/upload")
@@ -41,7 +50,7 @@ public class FileController {
 
     }
 
-    @GetMapping(path = { "/getImage" })
+    @GetMapping("/getImage")
     public Image getImage(@RequestParam Long userId) {
         if(imageRepository.existsByUserId(userId)) {
             Image image = imageRepository.findByUserId(userId);
@@ -49,6 +58,19 @@ public class FileController {
             return image;
         }
         return new Image();
+    }
+
+    @GetMapping("/getCvs")
+    public List<Resume> getCvs(@RequestParam Long userId) {
+        if(resumeRepository.existsByStudentId(userId)) {
+            List<Resume> resumes = resumeRepository.findAllByStudentId(userId);
+            for(Resume cv : resumes) {
+                cv.setData(decompressBytes(cv.getData()));
+            }
+            return resumes;
+        }
+        else
+            return new ArrayList<>();
     }
 
     // uncompress the image bytes before returning it to the angular application
@@ -63,8 +85,8 @@ public class FileController {
                 outputStream.write(buffer, 0, count);
             }
             outputStream.close();
-        } catch (IOException ioe) {
-        } catch (DataFormatException e) {
+        } catch (IOException | DataFormatException ioe) {
+            ioe.printStackTrace();
         }
         return outputStream.toByteArray();
     }

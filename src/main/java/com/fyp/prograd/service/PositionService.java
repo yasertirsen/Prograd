@@ -40,7 +40,7 @@ public class PositionService {
         return positionRepository.save(position);
     }
 
-    public Set<Position> getCompanyPositions(Long id) {
+    public List<Position> getCompanyPositions(Long id) {
         return positionRepository.findAllByCompany(companyRepository.findByCompanyId(id));
     }
 }

@@ -28,23 +28,23 @@ public class PositionController {
     }
 
     @GetMapping(value = "/all", produces = "application/json")
-    public List<Position> getAll(@RequestHeader(AUTH_TOKEN) String bearerToken) {
+    public List<Position> getAll() {
         return positionService.getAll();
     }
 
     @GetMapping(value = "/findById", produces = "application/json")
-    public Position findById(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam Long id) throws JobNotFoundException {
+    public Position findById(@RequestParam Long id) throws JobNotFoundException {
         return positionService.findById(id);
     }
 
     @PutMapping(value = "/update", consumes = "application/json", produces="application/json")
     @ResponseBody
-    public Position update(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestBody Position position) {
+    public Position update(@RequestBody Position position) {
         return positionService.update(position);
     }
 
     @GetMapping(value= "/getCompanyPositions/{companyId}", produces = "application/json")
-    Set<Position> getCompanyPositions(@RequestHeader(AUTH_TOKEN) String bearerToken, @PathVariable Long companyId) {
+    List<Position> getCompanyPositions(@PathVariable Long companyId) {
         return positionService.getCompanyPositions(companyId);
     }
 }
