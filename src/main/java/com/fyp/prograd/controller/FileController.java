@@ -57,6 +57,7 @@ public class FileController {
             image.setData(decompressBytes(image.getData()));
             return image;
         }
+        //change to throw error
         return new Image();
     }
 

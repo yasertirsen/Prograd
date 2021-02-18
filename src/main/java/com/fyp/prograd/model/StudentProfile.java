@@ -24,4 +24,9 @@ public class StudentProfile {
     private Set<Skill> externalSkills;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Project> projects;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Experience> experiences;
+    private String startCourse;
+    private String endCourse;
+    private double averageGrade;
 }

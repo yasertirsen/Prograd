@@ -52,5 +52,4 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profileId", referencedColumnName = "profileId")
     private StudentProfile profile;
-    private String cvPath;
 }
