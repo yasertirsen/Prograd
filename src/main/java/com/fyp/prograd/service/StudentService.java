@@ -7,6 +7,7 @@ import com.fyp.prograd.model.StudentProfile;
 import com.fyp.prograd.repository.SkillRepository;
 import com.fyp.prograd.repository.StudentProfileRepository;
 import com.fyp.prograd.repository.StudentRepository;
+import com.google.common.collect.Sets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,7 +50,7 @@ public class StudentService {
 
     public StudentProfile updateProfile(StudentProfile profile) throws UserNotFoundException {
         if(profileRepository.existsById(profile.getProfileId())) {
-            return profileRepository.saveAndFlush(profile);
+            return profileRepository.save(profile);
         }
         throw new UserNotFoundException();
     }
@@ -105,5 +106,9 @@ public class StudentService {
             skillNames.add(skill.getSkillName());
         }
         return skillNames;
+    }
+
+    public Set<Skill> getAllSkills() {
+        return Sets.newHashSet(skillRepository.findAll());
     }
 }

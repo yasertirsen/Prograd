@@ -25,7 +25,6 @@ public class Skill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long skillId;
-    @NotBlank(message = "Skill name cannot be empty or Null")
     private String skillName;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "industryId", referencedColumnName = "industryId")

@@ -1,6 +1,7 @@
 package com.fyp.prograd.controller;
 
 import com.fyp.prograd.exceptions.UserNotFoundException;
+import com.fyp.prograd.model.Skill;
 import com.fyp.prograd.model.Student;
 import com.fyp.prograd.model.StudentProfile;
 import com.fyp.prograd.service.StudentService;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/api/students")
@@ -84,5 +86,10 @@ public class StudentController {
     @PostMapping("/getSkillsNames")
     public List<String> getSkillsNames(@RequestBody StudentProfile profile) {
         return studentService.getSkillsNames(profile);
+    }
+
+    @GetMapping("/getAllSkills")
+    public Set<Skill> getAllSkills() {
+        return studentService.getAllSkills();
     }
 }
