@@ -27,7 +27,6 @@ import java.util.Set;
 public class StudentController {
 
     private final StudentService studentService;
-    private final String AUTH_TOKEN = "x-api-key";
 
     @Autowired
     public StudentController(StudentService studentService) {
@@ -40,29 +39,29 @@ public class StudentController {
     }
 
     @GetMapping(value = "/findByEmail")
-    public ResponseEntity<Student> findByEmail(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String email) {
+    public ResponseEntity<Student> findByEmail(@RequestParam String email) {
         return studentService.findByEmail(email);
     }
 
     @GetMapping(value = "/findByUsername")
-    public ResponseEntity<Student> findByUsername(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String username) {
+    public ResponseEntity<Student> findByUsername(@RequestParam String username) {
         return studentService.findByUsername(username);
     }
 
     @GetMapping(value = "/findByToken")
-    public ResponseEntity<Student> findByToken(@RequestHeader(AUTH_TOKEN) String bearerToken, @RequestParam String token) {
+    public ResponseEntity<Student> findByToken(@RequestParam String token) {
         return studentService.findByToken(token);
     }
 
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
-    public ResponseEntity<?> getAllStudents(@RequestHeader(AUTH_TOKEN) String bearerToken) {
+    public ResponseEntity<?> getAllStudents() {
         return studentService.getAllStudents();
     }
 
     @GetMapping(value = "/profiles", produces = "application/json")
     @ResponseBody
-    public List<StudentProfile> getAllProfiles(@RequestHeader(AUTH_TOKEN) String bearerToken) {
+    public List<StudentProfile> getAllProfiles() {
         return studentService.getAllProfiles();
     }
 

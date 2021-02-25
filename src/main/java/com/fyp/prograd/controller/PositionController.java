@@ -1,9 +1,11 @@
 package com.fyp.prograd.controller;
 
 import com.fyp.prograd.exceptions.JobNotFoundException;
+import com.fyp.prograd.model.Application;
 import com.fyp.prograd.model.Company;
 import com.fyp.prograd.model.Position;
 import com.fyp.prograd.service.PositionService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -44,7 +46,22 @@ public class PositionController {
     }
 
     @GetMapping(value= "/getCompanyPositions/{companyId}", produces = "application/json")
-    List<Position> getCompanyPositions(@PathVariable Long companyId) {
+    public List<Position> getCompanyPositions(@PathVariable Long companyId) {
         return positionService.getCompanyPositions(companyId);
+    }
+
+    @PostMapping("/apply")
+    public ResponseEntity<String> apply(@RequestBody Application application) {
+        return positionService.apply(application);
+    }
+
+    @GetMapping("/getApplicationsByPositionId")
+    public List<Application> getApplicationsByPositionId(@RequestParam Long positionId) {
+        return positionService.getApplicationsByPositionId(positionId);
+    }
+
+    @GetMapping("/getApplicationsByEmail")
+    public List<Application> getApplicationsByEmail(@RequestParam String email) {
+        return positionService.getApplicationsByEmail(email);
     }
 }

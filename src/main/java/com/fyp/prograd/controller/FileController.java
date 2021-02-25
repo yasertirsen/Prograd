@@ -31,9 +31,8 @@ public class FileController {
     }
 
     @PostMapping(value = "/saveCv")
-    public ResponseEntity<String> uploadImage(@RequestBody Resume resume) {
-        resumeRepository.save(resume);
-        return new ResponseEntity<>("saved successfully", HttpStatus.OK);
+    public Resume uploadImage(@RequestBody Resume resume) {
+        return resumeRepository.save(resume);
     }
 
     @PostMapping(value = "/upload")
