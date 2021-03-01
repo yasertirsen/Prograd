@@ -64,4 +64,10 @@ public class PositionController {
     public List<Application> getApplicationsByEmail(@RequestParam String email) {
         return positionService.getApplicationsByEmail(email);
     }
+
+    @DeleteMapping("/delete/{positionId}")
+    public ResponseEntity<String> deletePosition(@PathVariable Long positionId) {
+        return positionService.delete(positionId);
+    }
+
 }

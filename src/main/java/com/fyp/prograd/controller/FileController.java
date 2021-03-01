@@ -2,15 +2,21 @@ package com.fyp.prograd.controller;
 
 import com.fyp.prograd.model.Image;
 import com.fyp.prograd.model.Resume;
+import com.fyp.prograd.repository.ApplicationRepository;
 import com.fyp.prograd.repository.ImageRepository;
 import com.fyp.prograd.repository.ResumeRepository;
+import com.fyp.prograd.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.DataFormatException;
@@ -23,11 +29,16 @@ public class FileController {
 
     private final ImageRepository imageRepository;
     private final ResumeRepository resumeRepository;
+    private final StudentRepository studentRepository;
+    private final ApplicationRepository applicationRepository;
 
     @Autowired
-    public FileController(ImageRepository imageRepository, ResumeRepository resumeRepository) {
+    public FileController(ImageRepository imageRepository, ResumeRepository resumeRepository,
+                          StudentRepository studentRepository, ApplicationRepository applicationRepository) {
         this.imageRepository = imageRepository;
         this.resumeRepository = resumeRepository;
+        this.studentRepository = studentRepository;
+        this.applicationRepository = applicationRepository;
     }
 
     @PostMapping(value = "/saveCv")
@@ -71,6 +82,13 @@ public class FileController {
         }
         else
             return new ArrayList<>();
+    }
+
+    @GetMapping("/getCv")
+    public Resume getCv(@RequestParam Long applicationId) {
+        Resume resume = applicationRepository.findByApplicationId(applicationId).getResume();
+        resume.setData(decompressBytes(resume.getData()));
+        return resume;
     }
 
     // uncompress the image bytes before returning it to the angular application

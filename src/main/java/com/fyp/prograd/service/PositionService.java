@@ -43,7 +43,11 @@ public class PositionService {
     }
 
     public Position update(Position position) {
-        return positionRepository.save(position);
+        if(positionRepository.existsById(position.getPositionId())) {
+            return positionRepository.save(position);
+        }
+        else
+            throw new ProgradException("Position does not exist");
     }
 
     public List<Position> getCompanyPositions(Long id) {
@@ -61,5 +65,14 @@ public class PositionService {
 
     public List<Application> getApplicationsByEmail(String email) {
         return applicationRepository.findAllByEmail(email);
+    }
+
+    public ResponseEntity<String> delete(Long positionId) {
+        if(positionRepository.existsById(positionId)) {
+            positionRepository.deleteById(positionId);
+            return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>("Could not find position with id " + positionId, HttpStatus.BAD_REQUEST);
     }
 }

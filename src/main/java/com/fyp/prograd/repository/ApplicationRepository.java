@@ -8,4 +8,5 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
     List<Application> findAllByPositionId(Long positionId);
     List<Application> findAllByEmail(String email);
+    Application findByApplicationId(Long applicationId);
 }

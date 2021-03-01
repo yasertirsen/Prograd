@@ -1,9 +1,8 @@
 package com.fyp.prograd.service;
 
 import com.fyp.prograd.exceptions.UserNotFoundException;
-import com.fyp.prograd.model.Company;
-import com.fyp.prograd.model.CompanyProfile;
-import com.fyp.prograd.model.Review;
+import com.fyp.prograd.model.*;
+import com.fyp.prograd.repository.ApplicationRepository;
 import com.fyp.prograd.repository.CompanyProfileRepository;
 import com.fyp.prograd.repository.CompanyRepository;
 import com.fyp.prograd.repository.ReviewRepository;
@@ -23,12 +22,16 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final ReviewRepository reviewRepository;
     private final CompanyProfileRepository profileRepository;
+    private final ApplicationRepository applicationRepository;
+    private final PositionService positionService;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository, CompanyProfileRepository profileRepository) {
+    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository, CompanyProfileRepository profileRepository, ApplicationRepository applicationRepository, PositionService positionService) {
         this.companyRepository = companyRepository;
         this.reviewRepository = reviewRepository;
         this.profileRepository = profileRepository;
+        this.applicationRepository = applicationRepository;
+        this.positionService = positionService;
     }
 
     public Company add(Company company) {
