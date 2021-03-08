@@ -26,8 +26,6 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long skillId;
     private String skillName;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "industryId", referencedColumnName = "industryId")
-    private Industry industry;
+    private String industry;
 }
 
