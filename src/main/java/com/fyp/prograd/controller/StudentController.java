@@ -53,6 +53,11 @@ public class StudentController {
         return studentService.findByToken(token);
     }
 
+    @GetMapping(value = "/getById/{studentId}")
+    public Student findById(@PathVariable Long studentId) {
+        return studentService.findById(studentId);
+    }
+
     @GetMapping(value = "/all", produces = "application/json")
     @ResponseBody
     public ResponseEntity<?> getAllStudents() {

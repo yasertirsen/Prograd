@@ -111,4 +111,8 @@ public class StudentService {
     public Set<Skill> getAllSkills() {
         return Sets.newHashSet(skillRepository.findAll());
     }
+
+    public Student findById(Long studentId) {
+        return studentRepository.findByStudentId(studentId);
+    }
 }

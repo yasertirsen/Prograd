@@ -1,5 +1,6 @@
 package com.fyp.prograd.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -46,4 +47,6 @@ public class Student {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profileId", referencedColumnName = "profileId")
     private StudentProfile profile;
+
+
 }

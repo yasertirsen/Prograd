@@ -1,5 +1,6 @@
 package com.fyp.prograd.controller;
 
+import com.fyp.prograd.dto.CompanyWrapper;
 import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Company;
 import com.fyp.prograd.model.CompanyProfile;
@@ -42,7 +43,7 @@ public class CompanyController {
     }
 
     @GetMapping(value = "/findByName")
-    public ResponseEntity<Company> findByName(@RequestParam String name) {
+    public ResponseEntity<CompanyWrapper> findByName(@RequestParam String name) {
         return companyService.findByName(name);
     }
 

@@ -9,7 +9,7 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     boolean existsByEmail(String email);
     boolean existsByName(String name);
     boolean existsByToken(String token);
-    Company findByName(String name);
+    Optional<Company> findByName(String name);
     Company findByToken(String token);
     Company findByEmail(String email);
     Company findByCompanyId(Long id);

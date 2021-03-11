@@ -20,5 +20,6 @@ public class CompanyProfile {
     @OneToMany(cascade = CascadeType.ALL)
     Set<Student> hiredStudents;
     @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profileId")
     List<Review> reviews;
 }

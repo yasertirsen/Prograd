@@ -1,18 +1,21 @@
 package com.fyp.prograd.service;
 
+import com.fyp.prograd.dto.CompanyWrapper;
+import com.fyp.prograd.exceptions.ProgradException;
 import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.*;
-import com.fyp.prograd.repository.ApplicationRepository;
-import com.fyp.prograd.repository.CompanyProfileRepository;
-import com.fyp.prograd.repository.CompanyRepository;
-import com.fyp.prograd.repository.ReviewRepository;
+import com.fyp.prograd.modelInterface.SimpleStudent;
+import com.fyp.prograd.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -22,16 +25,15 @@ public class CompanyService {
     private final CompanyRepository companyRepository;
     private final ReviewRepository reviewRepository;
     private final CompanyProfileRepository profileRepository;
-    private final ApplicationRepository applicationRepository;
-    private final PositionService positionService;
+    private final StudentRepository studentRepository;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository, CompanyProfileRepository profileRepository, ApplicationRepository applicationRepository, PositionService positionService) {
+    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository, CompanyProfileRepository profileRepository
+            , StudentRepository studentRepository) {
         this.companyRepository = companyRepository;
         this.reviewRepository = reviewRepository;
         this.profileRepository = profileRepository;
-        this.applicationRepository = applicationRepository;
-        this.positionService = positionService;
+        this.studentRepository = studentRepository;
     }
 
     public Company add(Company company) {
@@ -46,11 +48,16 @@ public class CompanyService {
     }
 
 
-    public ResponseEntity<Company> findByName(String name) {
-        if(companyRepository.existsByName(name))
-            return new ResponseEntity<>(companyRepository.findByName(name), HttpStatus.OK);
-        else
-            return new ResponseEntity<>(null, HttpStatus.OK);
+    public ResponseEntity<CompanyWrapper> findByName(String name) {
+        Company company = companyRepository.findByName(name).orElseThrow(()
+                -> new ProgradException("Company doesn't exist"));
+        List<SimpleStudent> users = new ArrayList<>();
+        company.getProfile().getReviews().forEach(r -> {
+            SimpleStudent student = studentRepository.findSimpleStudentByStudentId(r.getStudentId());
+            users.add(student);
+        });
+        return new ResponseEntity<>(new CompanyWrapper(company, users)
+                , HttpStatus.OK);
     }
 
     public ResponseEntity<Company> findByToken(String token) {
