@@ -29,15 +29,13 @@ public class FileController {
 
     private final ImageRepository imageRepository;
     private final ResumeRepository resumeRepository;
-    private final StudentRepository studentRepository;
     private final ApplicationRepository applicationRepository;
 
     @Autowired
     public FileController(ImageRepository imageRepository, ResumeRepository resumeRepository,
-                          StudentRepository studentRepository, ApplicationRepository applicationRepository) {
+                          ApplicationRepository applicationRepository) {
         this.imageRepository = imageRepository;
         this.resumeRepository = resumeRepository;
-        this.studentRepository = studentRepository;
         this.applicationRepository = applicationRepository;
     }
 

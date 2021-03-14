@@ -7,6 +7,7 @@ import com.fyp.prograd.model.Position;
 import com.fyp.prograd.repository.ApplicationRepository;
 import com.fyp.prograd.repository.CompanyRepository;
 import com.fyp.prograd.repository.PositionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class PositionService {
     private final CompanyRepository companyRepository;
     private final ApplicationRepository applicationRepository;
 
+    @Autowired
     public PositionService(PositionRepository positionRepository, CompanyRepository companyRepository,
                            ApplicationRepository applicationRepository) {
         this.positionRepository = positionRepository;

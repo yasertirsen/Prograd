@@ -13,9 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 
 @Service
@@ -26,14 +24,17 @@ public class CompanyService {
     private final ReviewRepository reviewRepository;
     private final CompanyProfileRepository profileRepository;
     private final StudentRepository studentRepository;
+    private final MailingListRepository mailingListRepository;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository, CompanyProfileRepository profileRepository
-            , StudentRepository studentRepository) {
+    public CompanyService(CompanyRepository companyRepository, ReviewRepository reviewRepository,
+                          CompanyProfileRepository profileRepository, StudentRepository studentRepository,
+                          MailingListRepository mailingListRepository) {
         this.companyRepository = companyRepository;
         this.reviewRepository = reviewRepository;
         this.profileRepository = profileRepository;
         this.studentRepository = studentRepository;
+        this.mailingListRepository = mailingListRepository;
     }
 
     public Company add(Company company) {
@@ -99,5 +100,19 @@ public class CompanyService {
             return profileRepository.save(profile);
         }
         throw new UserNotFoundException();
+    }
+
+    public MailingList getMailingList(Long companyId) {
+        return mailingListRepository.findByCompanyId(companyId).orElse(null);
+    }
+
+    public MailingList addToMailingList(Long companyId, String email) {
+        MailingList mailingList = mailingListRepository.findByCompanyId(companyId).orElse(new MailingList());
+        if(mailingList.getCompanyId() == null)
+            mailingList.setCompanyId(companyId);
+        if(mailingList.getEmails() == null)
+            mailingList.setEmails(new ArrayList<>());
+        mailingList.getEmails().add(email);
+        return mailingListRepository.save(mailingList);
     }
 }

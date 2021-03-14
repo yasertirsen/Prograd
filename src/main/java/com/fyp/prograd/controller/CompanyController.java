@@ -4,6 +4,7 @@ import com.fyp.prograd.dto.CompanyWrapper;
 import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Company;
 import com.fyp.prograd.model.CompanyProfile;
+import com.fyp.prograd.model.MailingList;
 import com.fyp.prograd.model.Review;
 import com.fyp.prograd.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,16 @@ public class CompanyController {
     @PutMapping("/updateProfile")
     public CompanyProfile updateProfile(@RequestBody CompanyProfile profile) throws UserNotFoundException {
         return companyService.updateProfile(profile);
+    }
+
+    @GetMapping("/mailingList")
+    public MailingList getMailingList(@RequestParam Long companyId) {
+        return companyService.getMailingList(companyId);
+    }
+
+    @PostMapping("/addToMailing")
+    public MailingList addToMailingList(@RequestParam Long companyId, @RequestParam String email) {
+        return companyService.addToMailingList(companyId, email);
     }
 
 }

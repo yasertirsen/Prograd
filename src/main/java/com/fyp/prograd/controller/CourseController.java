@@ -2,12 +2,8 @@ package com.fyp.prograd.controller;
 
 import com.fyp.prograd.exceptions.CourseNotFoundException;
 import com.fyp.prograd.model.Course;
-import com.fyp.prograd.model.Student;
-import com.fyp.prograd.repository.CourseRepository;
 import com.fyp.prograd.service.CourseService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
