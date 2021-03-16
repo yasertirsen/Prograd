@@ -17,8 +17,8 @@ public class CompanyProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long profileId;
-    @OneToMany(cascade = CascadeType.ALL)
-    Set<Student> hiredStudents;
+    @ElementCollection
+    Set<Long> hiredStudents;
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "profileId")
     List<Review> reviews;

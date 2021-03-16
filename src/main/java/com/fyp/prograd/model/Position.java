@@ -39,6 +39,7 @@ public class Position {
     private String url;
     private int clicks;
     private boolean priority;
+    private boolean archive;
     @ManyToOne
     @JoinColumn(name = "companyId", referencedColumnName = "companyId")
     private Company company;
