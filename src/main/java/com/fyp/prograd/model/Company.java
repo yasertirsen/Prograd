@@ -43,6 +43,7 @@ public class Company {
     private Long expiresIn;
     private String token;
     private boolean enabled;
+    private boolean subscribed;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "profileId", referencedColumnName = "profileId")
     private CompanyProfile profile;
