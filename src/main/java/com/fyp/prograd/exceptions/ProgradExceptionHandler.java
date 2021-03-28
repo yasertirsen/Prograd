@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import static com.fyp.prograd.constant.ErrorConstants.*;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @RestControllerAdvice
 public class ProgradExceptionHandler {
@@ -19,7 +20,7 @@ public class ProgradExceptionHandler {
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<HttpCustomResponse> userNotFoundException() {
-        return createHttpResponse(BAD_REQUEST, USER_NOT_FOUND);
+        return createHttpResponse(UNAUTHORIZED, USER_NOT_FOUND);
     }
 
     @ExceptionHandler(CourseNotFoundException.class)

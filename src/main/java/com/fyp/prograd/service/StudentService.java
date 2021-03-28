@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -69,11 +68,11 @@ public class StudentService {
             return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
-    public ResponseEntity<Student> findByToken(String token) {
+    public ResponseEntity<Student> findByToken(String token) throws UserNotFoundException {
         if(studentRepository.existsByToken(token))
             return new ResponseEntity<>(studentRepository.findByToken(token), HttpStatus.OK);
         else
-            return new ResponseEntity<>(null, HttpStatus.OK);
+            throw new UserNotFoundException("Cannot find user with token");
     }
 
     public ResponseEntity<?> getAllStudents() {
