@@ -77,4 +77,10 @@ public class PositionService {
         else
             return new ResponseEntity<>("Could not find position with id " + positionId, HttpStatus.BAD_REQUEST);
     }
+
+    public Application updateApplication(Application application) throws JobNotFoundException {
+        if(applicationRepository.existsById(application.getApplicationId()))
+            return applicationRepository.save(application);
+        throw new JobNotFoundException();
+    }
 }

@@ -1,5 +1,6 @@
 package com.fyp.prograd.service;
 
+import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Image;
 import com.fyp.prograd.model.Resume;
 import com.fyp.prograd.repository.ApplicationRepository;
@@ -89,5 +90,12 @@ public class FileService {
             ioe.printStackTrace();
         }
         return outputStream.toByteArray();
+    }
+
+    public Resume updateCV(Resume resume) throws UserNotFoundException {
+        if(resumeRepository.existsById(resume.getResumeId())) {
+            return resumeRepository.save(resume);
+        }
+        throw new UserNotFoundException();
     }
 }

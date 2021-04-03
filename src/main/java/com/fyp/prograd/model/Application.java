@@ -20,4 +20,6 @@ public class Application {
     @JoinColumn(name = "resumeId", referencedColumnName = "resumeId")
     private Resume resume;
     private Long positionId;
+    private String status;
+    private String date;
 }

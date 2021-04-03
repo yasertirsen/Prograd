@@ -1,5 +1,6 @@
 package com.fyp.prograd.controller;
 
+import com.fyp.prograd.exceptions.UserNotFoundException;
 import com.fyp.prograd.model.Image;
 import com.fyp.prograd.model.Resume;
 import com.fyp.prograd.service.FileService;
@@ -36,13 +37,18 @@ public class FileController {
         return fileService.getImage(userId);
     }
 
-    @GetMapping("/getCvs")
-    public List<Resume> getCvs(@RequestParam Long userId) {
+    @GetMapping("/getAllCvs/{userId}")
+    public List<Resume> getCvs(@PathVariable Long userId) {
         return fileService.getCvs(userId);
     }
 
     @GetMapping("/getCv")
     public Resume getCv(@RequestParam Long applicationId) {
         return fileService.getCv(applicationId);
+    }
+
+    @PutMapping("/updateCv")
+    public Resume updateCv(@RequestBody Resume resume) throws UserNotFoundException {
+        return fileService.updateCV(resume);
     }
 }

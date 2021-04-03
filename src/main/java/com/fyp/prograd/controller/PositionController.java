@@ -70,4 +70,8 @@ public class PositionController {
         return positionService.delete(positionId);
     }
 
+    @PutMapping("/application/update")
+    public Application updateApplication(@RequestBody Application application) throws JobNotFoundException {
+        return positionService.updateApplication(application);
+    }
 }
