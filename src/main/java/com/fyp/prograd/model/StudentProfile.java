@@ -20,7 +20,7 @@ public class StudentProfile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "courseId", referencedColumnName = "courseId")
     private Course course;
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany()
     private Set<Skill> externalSkills;
     @OneToMany(cascade = CascadeType.ALL)
     private List<Project> projects;

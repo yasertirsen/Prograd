@@ -4,6 +4,7 @@ import com.fyp.prograd.exceptions.JobNotFoundException;
 import com.fyp.prograd.model.Application;
 import com.fyp.prograd.model.Company;
 import com.fyp.prograd.model.Position;
+import com.fyp.prograd.model.Resume;
 import com.fyp.prograd.service.PositionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +18,6 @@ import java.util.Set;
 public class PositionController {
 
     private final PositionService positionService;
-
-    private final String AUTH_TOKEN = "x-api-key";
 
     public PositionController(PositionService positionService) {
         this.positionService = positionService;

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -48,7 +49,15 @@ public class StudentService {
     }
 
     public StudentProfile updateProfile(StudentProfile profile) throws UserNotFoundException {
+        Set<Skill> skills = new HashSet<>();
         if(profileRepository.existsById(profile.getProfileId())) {
+            for(Skill skill : profile.getExternalSkills()) {
+                if(skillRepository.existsBySkillName(skill.getSkillName()))
+                    skills.add(skillRepository.findTopBySkillName(skill.getSkillName()));
+                else
+                    skills.add(skillRepository.save(skill));
+            }
+            profile.setExternalSkills(skills);
             return profileRepository.save(profile);
         }
         throw new UserNotFoundException();
