@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class StudentService {
 
     private final StudentRepository studentRepository;
@@ -51,16 +50,21 @@ public class StudentService {
     public StudentProfile updateProfile(StudentProfile profile) throws UserNotFoundException {
         Set<Skill> skills = new HashSet<>();
         if(profileRepository.existsById(profile.getProfileId())) {
-            for(Skill skill : profile.getExternalSkills()) {
-                if(skillRepository.existsBySkillName(skill.getSkillName()))
-                    skills.add(skillRepository.findTopBySkillName(skill.getSkillName()));
-                else
-                    skills.add(skillRepository.save(skill));
-            }
-            profile.setExternalSkills(skills);
+            profile.setExternalSkills(checkSkills(profile.getExternalSkills()));
             return profileRepository.save(profile);
         }
         throw new UserNotFoundException();
+    }
+
+    public Set<Skill> checkSkills(Set<Skill> skills) {
+        Set<Skill> dbSkills = new HashSet<>();
+        for(Skill skill : skills) {
+            if(skillRepository.existsBySkillName(skill.getSkillName()))
+                dbSkills.add(skillRepository.findTopBySkillName(skill.getSkillName()));
+            else
+                dbSkills.add(skillRepository.save(skill));
+        }
+        return dbSkills;
     }
 
     public ResponseEntity<Student> findByEmail(@RequestBody String email) {

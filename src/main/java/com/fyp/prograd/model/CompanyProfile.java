@@ -22,4 +22,6 @@ public class CompanyProfile {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "profileId")
     List<Review> reviews;
+    @Lob
+    private String bio;
 }

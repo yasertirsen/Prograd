@@ -4,15 +4,19 @@ import com.fyp.prograd.exceptions.JobNotFoundException;
 import com.fyp.prograd.exceptions.ProgradException;
 import com.fyp.prograd.model.Application;
 import com.fyp.prograd.model.Position;
+import com.fyp.prograd.model.Skill;
 import com.fyp.prograd.repository.ApplicationRepository;
 import com.fyp.prograd.repository.CompanyRepository;
 import com.fyp.prograd.repository.PositionRepository;
+import com.fyp.prograd.repository.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class PositionService {
@@ -20,16 +24,19 @@ public class PositionService {
     private final PositionRepository positionRepository;
     private final CompanyRepository companyRepository;
     private final ApplicationRepository applicationRepository;
+    private final SkillRepository skillRepository;
 
     @Autowired
     public PositionService(PositionRepository positionRepository, CompanyRepository companyRepository,
-                           ApplicationRepository applicationRepository) {
+                           ApplicationRepository applicationRepository, SkillRepository skillRepository) {
         this.positionRepository = positionRepository;
         this.companyRepository = companyRepository;
         this.applicationRepository = applicationRepository;
+        this.skillRepository = skillRepository;
     }
 
     public Position add(Position position) {
+        position.setRequirements(checkSkills(position.getRequirements()));
         return positionRepository.save(position);
     }
 
@@ -82,5 +89,16 @@ public class PositionService {
         if(applicationRepository.existsById(application.getApplicationId()))
             return applicationRepository.save(application);
         throw new JobNotFoundException();
+    }
+
+    public Set<Skill> checkSkills(Set<Skill> skills) {
+        Set<Skill> dbSkills = new HashSet<>();
+        for(Skill skill : skills) {
+            if(skillRepository.existsBySkillName(skill.getSkillName()))
+                dbSkills.add(skillRepository.findTopBySkillName(skill.getSkillName()));
+            else
+                dbSkills.add(skillRepository.save(skill));
+        }
+        return dbSkills;
     }
 }
