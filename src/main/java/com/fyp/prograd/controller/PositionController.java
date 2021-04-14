@@ -44,6 +44,11 @@ public class PositionController {
         return positionService.update(position);
     }
 
+    @GetMapping("/searchByTitle/{keywords}")
+    public List<Position> searchByTitle(@PathVariable String keywords) {
+        return positionService.searchByTitle(keywords);
+    }
+
     @GetMapping(value= "/getCompanyPositions/{companyId}", produces = "application/json")
     public List<Position> getCompanyPositions(@PathVariable Long companyId) {
         return positionService.getCompanyPositions(companyId);

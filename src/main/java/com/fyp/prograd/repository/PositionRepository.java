@@ -10,4 +10,5 @@ import java.util.Set;
 public interface PositionRepository extends JpaRepository<Position, Long> {
     Position findByPositionId(Long id);
     List<Position> findAllByCompany(Company company);
+    List<Position> findByTitleIgnoreCaseContaining(String keywords);
 }

@@ -101,4 +101,8 @@ public class PositionService {
         }
         return dbSkills;
     }
+
+    public List<Position> searchByTitle(String keywords) {
+        return positionRepository.findByTitleIgnoreCaseContaining(keywords);
+    }
 }
