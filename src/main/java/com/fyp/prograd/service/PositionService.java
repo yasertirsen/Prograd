@@ -53,6 +53,7 @@ public class PositionService {
 
     public Position update(Position position) {
         if(positionRepository.existsById(position.getPositionId())) {
+            position.setRequirements(checkSkills(position.getRequirements()));
             return positionRepository.save(position);
         }
         else

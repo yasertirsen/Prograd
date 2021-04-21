@@ -48,7 +48,6 @@ public class StudentService {
     }
 
     public StudentProfile updateProfile(StudentProfile profile) throws UserNotFoundException {
-        Set<Skill> skills = new HashSet<>();
         if(profileRepository.existsById(profile.getProfileId())) {
             profile.setExternalSkills(checkSkills(profile.getExternalSkills()));
             return profileRepository.save(profile);

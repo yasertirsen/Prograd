@@ -16,7 +16,7 @@ public class Application {
     private Long applicationId;
     private String fullName;
     private String email;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "resumeId", referencedColumnName = "resumeId")
     private Resume resume;
     private Long positionId;
