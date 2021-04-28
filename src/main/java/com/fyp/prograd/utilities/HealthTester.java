@@ -15,7 +15,7 @@ public class HealthTester {
             URL siteURL = new URL(url);
             HttpURLConnection connection = (HttpURLConnection) siteURL.openConnection();
             connection.setRequestMethod("GET");
-            connection.setConnectTimeout(3000);
+            connection.setConnectTimeout(1000);
             connection.connect();
 
             int code = connection.getResponseCode();
